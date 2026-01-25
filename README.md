@@ -7,4 +7,4 @@ sdk: static
 pinned: false
 ---
 
-# 무역 기업의 헤지 전략 제공 솔루션
+# 무역 기업의 헤지 전략 제공 AI 솔루션
