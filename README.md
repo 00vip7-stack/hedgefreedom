@@ -1,2 +1,10 @@
-# hedgefreedom
-무역 기업의 헤지 전략을 지원하는 솔루션
+---
+title: Hedgefreedom.com
+emoji: 📈
+colorFrom: blue
+colorTo: indigo
+sdk: static
+pinned: false
+---
+
+# 무역 기업의 헤지 전략 제공 솔루션
