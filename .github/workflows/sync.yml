@@ -1,0 +1,10 @@
+name: Sync to HF
+on: [push]
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: git push --force https://00vip:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/00vip/Hedgefreedom.com main
