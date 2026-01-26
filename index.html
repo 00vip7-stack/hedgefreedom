@@ -1,170 +1,157 @@
-
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hedge-On Architecture | Enterprise FX Solution</title>
+    <title>Hedge-On Dashboard | 통합 관리 터미널</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #020617; }
-        .grid-pattern {
-            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
-            background-size: 40px 40px;
-        }
-        .glow { box-shadow: 0 0 30px rgba(59, 130, 246, 0.15); }
-        .border-gradient { border: 1px solid rgba(255,255,255,0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .border-gradient:hover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.03); transform: translateY(-2px); }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Pretendard:wght@400;600;800&display=swap');
+        body { font-family: 'Pretendard', sans-serif; background-color: #0f172a; color: #f1f5f9; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .stat-card { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(51, 65, 85, 0.5); }
+        .accent-border { border-left: 4px solid #3b82f6; }
     </style>
 </head>
-<body class="text-slate-400 grid-pattern">
+<body class="p-6">
 
-    <nav class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-2xl sticky top-0 z-50">
-        <div class="max-w-[1400px] mx-auto px-10 py-5 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-7 h-7 bg-blue-600 rounded-sm flex items-center justify-center font-black text-white text-xs">H</div>
-                <span class="text-lg font-extrabold tracking-tighter text-white uppercase">Hedge-On <span class="text-blue-500 font-light">Engine</span></span>
-            </div>
-            <div class="hidden lg:flex gap-12 text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase">
-                <a href="#" class="hover:text-blue-400 transition">Algorithms</a>
-                <a href="#" class="hover:text-blue-400 transition">Hybrid Logic</a>
-                <a href="#" class="hover:text-blue-400 transition">Simulation Lab</a>
-            </div>
-            <button class="text-[10px] font-black border border-slate-700 text-white px-6 py-2.5 rounded-sm uppercase hover:bg-white hover:text-black transition">Access Terminal</button>
-        </div>
-    </nav>
-
-    <header class="pt-40 pb-32 px-10 max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-20 items-center">
+    <header class="flex justify-between items-center mb-8 pb-4 border-b border-slate-800">
         <div>
-            <div class="flex items-center gap-4 mb-8">
-                <span class="h-[1px] w-10 bg-blue-500"></span>
-                <span class="text-blue-500 text-[10px] font-black tracking-[0.4em] uppercase">Intelligence Architecture</span>
-            </div>
-            <h1 class="text-5xl md:text-6xl font-extrabold text-white leading-[1.05] mb-10 tracking-tight">
-                과거를 분석하지 않습니다.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500 font-black">미래를 설계합니다.</span>
-            </h1>
-            <p class="text-lg text-slate-500 leading-relaxed mb-14 max-w-xl font-light">
-                글로벌 무역 기업을 위한 차세대 외환 리스크 관리 시스템. 독자적인 미래 예측 알고리즘이 복합 헤지 전략을 실시간으로 제안합니다.
-            </p>
-            <div class="flex items-center gap-6">
-                <button class="bg-blue-600 text-white px-10 py-5 rounded-sm font-bold text-sm uppercase tracking-widest hover:bg-blue-500 transition glow">Get Started</button>
-                <button class="text-white px-10 py-5 rounded-sm font-bold text-sm uppercase tracking-widest border border-slate-800 hover:bg-slate-900 transition">Documentation</button>
-            </div>
+            <h1 class="text-xl font-extrabold tracking-tight">HEDGE-ON <span class="text-blue-500">TERMINAL</span></h1>
+            <p class="text-[10px] text-slate-500 mono uppercase">Status: Engine Active / 2026-01-26 23:26</p>
         </div>
-        <div class="relative">
-            <div class="absolute -inset-10 bg-blue-500/5 blur-[120px] rounded-full"></div>
-            <div class="relative bg-slate-900/40 border border-slate-800/50 rounded-sm overflow-hidden glow backdrop-blur-3xl">
-                <div class="bg-slate-900/80 px-5 py-3 border-b border-slate-800/50 flex justify-between items-center">
-                    <div class="flex gap-1.5">
-                        <div class="w-2 h-2 rounded-full bg-slate-700"></div>
-                        <div class="w-2 h-2 rounded-full bg-slate-700"></div>
-                        <div class="w-2 h-2 rounded-full bg-slate-700"></div>
-                    </div>
-                    <span class="text-[9px] font-mono text-slate-500 tracking-tighter uppercase">Live Prediction Engine v3.0.4</span>
-                </div>
-                <div class="p-10">
-                    <div class="flex justify-between items-end mb-12">
-                        <div>
-                            <p class="text-[9px] text-blue-500 uppercase font-black tracking-widest mb-2">Market Forecast</p>
-                            <h3 class="text-3xl font-light text-white font-mono">USD/KRW <span class="text-blue-500">1,342.50</span></h3>
-                        </div>
-                        <div class="text-right font-mono">
-                            <span class="block text-green-500 text-sm font-bold">+1.24%</span>
-                            <span class="text-[9px] text-slate-600 uppercase">24h Confidence</span>
-                        </div>
-                    </div>
-                    <div class="h-[180px] flex items-end gap-1.5">
-                        <div class="flex-1 bg-slate-800/50 h-[40%] hover:bg-blue-500/40 transition-all duration-500"></div>
-                        <div class="flex-1 bg-slate-800/50 h-[55%] hover:bg-blue-500/40 transition-all duration-500"></div>
-                        <div class="flex-1 bg-slate-800/50 h-[45%] hover:bg-blue-500/40 transition-all duration-500"></div>
-                        <div class="flex-1 bg-slate-800/50 h-[70%] hover:bg-blue-500/40 transition-all duration-500"></div>
-                        <div class="flex-1 bg-blue-600 h-[90%] shadow-[0_0_20px_rgba(37,99,235,0.4)]"></div>
-                        <div class="flex-1 bg-blue-400/20 h-[85%] border-t border-blue-400/50 border-dashed"></div>
-                        <div class="flex-1 bg-blue-400/10 h-[75%] border-t border-blue-400/30 border-dashed"></div>
-                    </div>
-                </div>
-            </div>
+        <div class="flex gap-4">
+            <button class="bg-slate-800 px-4 py-2 rounded text-xs font-bold hover:bg-slate-700 transition">ERP 연동</button>
+            <button class="bg-blue-600 px-4 py-2 rounded text-xs font-bold hover:bg-blue-500 transition">회계 보고서 출력</button>
         </div>
     </header>
 
-    <section class="py-32 border-t border-slate-900 bg-black/20">
-        <div class="max-w-[1400px] mx-auto px-10">
-            <div class="grid lg:grid-cols-4 gap-px bg-slate-900 border border-slate-900">
-                <div class="bg-[#020617] p-12 border-gradient">
-                    <span class="text-[10px] font-black text-blue-500 tracking-[0.2em] uppercase mb-6 block font-mono">Forecast</span>
-                    <h4 class="text-white text-lg font-bold mb-5 tracking-tight">미래 예측 엔진</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed font-light">매크로 데이터와 실시간 수급량을 결합한 독자 알고리즘으로 정확도를 극대화합니다.</p>
-                </div>
-                <div class="bg-[#020617] p-12 border-gradient">
-                    <span class="text-[10px] font-black text-indigo-500 tracking-[0.2em] uppercase mb-6 block font-mono">Strategy</span>
-                    <h4 class="text-white text-lg font-bold mb-5 tracking-tight">하이브리드 헤지</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed font-light">선물환, 달러선물, 무역보험을 기업 환경에 맞춰 최적의 비율로 배분 제안합니다.</p>
-                </div>
-                <div class="bg-[#020617] p-12 border-gradient">
-                    <span class="text-[10px] font-black text-emerald-500 tracking-[0.2em] uppercase mb-6 block font-mono">Simulation</span>
-                    <h4 class="text-white text-lg font-bold mb-5 tracking-tight">20+ 분석 모듈</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed font-light">전문가용 금융 계산기와 시뮬레이션 도구가 시나리오별 리스크를 정밀 검증합니다.</p>
-                </div>
-                <div class="bg-[#020617] p-12 border-gradient">
-                    <span class="text-[10px] font-black text-purple-500 tracking-[0.2em] uppercase mb-6 block font-mono">Automate</span>
-                    <h4 class="text-white text-lg font-bold mb-5 tracking-tight">컴플라이언스 자동화</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed font-light">실행 즉시 생성되는 회계 증빙 보고서가 실무자의 행정 부담을 0%로 줄여줍니다.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-40 max-w-[1400px] mx-auto px-10">
-        <div class="flex flex-col md:flex-row justify-between items-start mb-24 gap-10">
-            <div class="max-w-xl">
-                <h2 class="text-4xl font-bold text-white leading-tight tracking-tighter mb-6 underline decoration-blue-500/30 underline-offset-8">기업별 맞춤형 복합 전략</h2>
-                <p class="text-slate-500 font-light leading-relaxed">헤지온은 단일 수단만을 고집하지 않습니다. 환변동보험의 안정성과 선물환의 유연성을 결합하여 고객사의 이익을 보호하는 최상의 포트폴리오를 구성합니다.</p>
-            </div>
-            <div class="flex flex-col gap-2 items-end">
-                <span class="text-[40px] font-black text-slate-800 leading-none tracking-tighter">03/</span>
-                <span class="text-[10px] font-bold text-blue-500 uppercase tracking-widest">Select Strategy</span>
-            </div>
-        </div>
+    <main class="grid lg:grid-cols-12 gap-6">
         
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="group p-12 bg-slate-900/20 border border-slate-800/50 hover:border-blue-500/50 transition-all duration-700">
-                <div class="w-10 h-10 border border-slate-700 flex items-center justify-center text-xs font-mono mb-8 group-hover:bg-blue-600 group-hover:border-blue-600 group-hover:text-white transition-all font-bold">A</div>
-                <h5 class="text-white font-bold text-sm tracking-widest uppercase mb-4">Stable Base</h5>
-                <p class="text-xs text-slate-500 leading-relaxed mb-10 font-light">무역보험공사 환변동보험 70% 구성으로 하방 리스크를 원천적으로 방어하는 보수적 전략입니다.</p>
-                <div class="h-[2px] bg-slate-800 w-full overflow-hidden">
-                    <div class="h-full bg-blue-500 w-[70%]"></div>
+        <section class="lg:col-span-8 space-y-6">
+            <div class="stat-card rounded-lg overflow-hidden">
+                <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+                    <h2 class="text-sm font-bold"><i class="fas fa-list-ul mr-2 text-blue-400"></i>실시간 거래 내역 테이블</h2>
+                    <span class="text-[10px] text-slate-400">총 12건의 미결제 거래</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left">
+                        <thead class="bg-slate-800/30 text-slate-400 uppercase font-mono">
+                            <tr>
+                                <th class="p-4">계약번호</th>
+                                <th class="p-4">거래처</th>
+                                <th class="p-4">통화/금액</th>
+                                <th class="p-4">만기일</th>
+                                <th class="p-4">현재상태</th>
+                                <th class="p-4">AI 권고</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800">
+                            <tr class="hover:bg-slate-800/20 transition">
+                                <td class="p-4 mono">TX-99201</td>
+                                <td class="p-4 font-semibold">Global Logistics Inc.</td>
+                                <td class="p-4 font-bold text-blue-400">USD 500,000</td>
+                                <td class="p-4 text-slate-400">2026-04-15</td>
+                                <td class="p-4"><span class="px-2 py-1 bg-yellow-500/10 text-yellow-500 rounded-full text-[10px]">오픈(미헤지)</span></td>
+                                <td class="p-4"><button class="text-blue-400 border border-blue-400/30 px-2 py-1 rounded hover:bg-blue-400 hover:text-white transition">보험 실행</button></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/20 transition">
+                                <td class="p-4 mono">TX-99205</td>
+                                <td class="p-4 font-semibold">Euro-Tech SA</td>
+                                <td class="p-4 font-bold text-blue-400">EUR 120,000</td>
+                                <td class="p-4 text-slate-400">2026-03-20</td>
+                                <td class="p-4"><span class="px-2 py-1 bg-green-500/10 text-green-500 rounded-full text-[10px]">선물환 완료</span></td>
+                                <td class="p-4 text-slate-600">완료됨</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="group p-12 bg-slate-900/20 border border-slate-800/50 hover:border-indigo-500/50 transition-all duration-700">
-                <div class="w-10 h-10 border border-slate-700 flex items-center justify-center text-xs font-mono mb-8 group-hover:bg-indigo-600 group-hover:border-indigo-600 group-hover:text-white transition-all font-bold">B</div>
-                <h5 class="text-white font-bold text-sm tracking-widest uppercase mb-4">Yield Optimize</h5>
-                <p class="text-xs text-slate-500 leading-relaxed mb-10 font-light">엔진 예측치에 따라 선물환 비중을 조절하여 환차익 기회를 적극적으로 확보하는 전략입니다.</p>
-                <div class="h-[2px] bg-slate-800 w-full overflow-hidden">
-                    <div class="h-full bg-indigo-500 w-[45%]"></div>
-                </div>
-            </div>
-            <div class="group p-12 bg-slate-900/20 border border-slate-800/50 hover:border-emerald-500/50 transition-all duration-700">
-                <div class="w-10 h-10 border border-slate-700 flex items-center justify-center text-xs font-mono mb-8 group-hover:bg-emerald-600 group-hover:border-emerald-600 group-hover:text-white transition-all font-bold">C</div>
-                <h5 class="text-white font-bold text-sm tracking-widest uppercase mb-4">AI Hybrid</h5>
-                <p class="text-xs text-slate-500 leading-relaxed mb-10 font-light">헤지온 엔진이 실시간 시장 데이터를 바탕으로 비중을 자동 최적화하는 하이엔드 솔루션입니다.</p>
-                <div class="h-[2px] bg-slate-800 w-full overflow-hidden">
-                    <div class="h-full bg-emerald-500 w-[95%]"></div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <footer class="border-t border-slate-900 py-24 px-10 bg-black/40">
-        <div class="max-w-[1400px] mx-auto flex flex-col items-center">
-            <div class="text-lg font-black text-white tracking-tighter mb-6 uppercase">Hedge-On <span class="text-blue-600 font-light">Algorithmic</span></div>
-            <p class="text-[10px] font-bold tracking-[0.5em] text-slate-600 uppercase mb-8 italic">Precision over Projection</p>
-            <div class="h-[1px] w-20 bg-slate-800 mb-8"></div>
-            <p class="text-slate-600 text-[10px] tracking-widest uppercase">© 2026 Hedge-On Intelligence Engine. All rights reserved.</p>
-        </div>
-    </footer>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="stat-card p-5 rounded-lg accent-border">
+                    <h3 class="text-xs font-bold text-slate-400 mb-4 uppercase">통화별 노출 현황 (Exposure)</h3>
+                    <div class="flex items-end gap-2 h-24 px-2">
+                        <div class="flex-1 bg-blue-500 h-[80%] rounded-t-sm relative group">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] hidden group-hover:block">USD</span>
+                        </div>
+                        <div class="flex-1 bg-indigo-500 h-[30%] rounded-t-sm"></div>
+                        <div class="flex-1 bg-slate-700 h-[15%] rounded-t-sm"></div>
+                    </div>
+                </div>
+                <div class="stat-card p-5 rounded-lg accent-border">
+                    <h3 class="text-xs font-bold text-slate-400 mb-4 uppercase">예상 환차손익 시뮬레이션</h3>
+                    <div class="flex flex-col justify-center h-24">
+                        <p class="text-[10px] text-slate-500">현재 환율 유지 시</p>
+                        <p class="text-2xl font-black text-green-400">+ ₩12,450,000</p>
+                        <p class="text-[10px] text-red-400 mt-2 font-mono">▼ -1.5% 하락 시 ₩(4,200,000) 손실 전환</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="lg:col-span-4 space-y-6">
+            <div class="stat-card rounded-lg p-6 border-blue-500/30 bg-blue-600/5">
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                    <h2 class="text-sm font-bold uppercase tracking-widest">Hedge-On AI Engine</h2>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <p class="text-[10px] text-slate-500 mb-1">24H 미래 환율 예측</p>
+                        <div class="text-2xl font-mono font-bold text-white">1,345.20 <span class="text-blue-400 text-sm ml-2">▲ 0.4%</span></div>
+                    </div>
+                    <div class="p-4 bg-slate-900 rounded border border-slate-800">
+                        <p class="text-xs font-bold mb-2">오늘의 최적 전략</p>
+                        <p class="text-[11px] leading-relaxed text-slate-400">
+                            "달러 강세가 예상됩니다. 미결제 USD 건에 대해 <span class="text-blue-400">환변동보험 비중을 40%로 유지</span>하고, 나머지는 선물환으로 분산할 것을 권고합니다."
+                        </p>
+                    </div>
+                    <button class="w-full bg-blue-600 py-3 rounded text-xs font-bold uppercase tracking-tighter hover:bg-blue-500 transition">복합 헤지 즉시 실행</button>
+                </div>
+            </div>
+
+            <div class="stat-card rounded-lg p-5">
+                <h3 class="text-xs font-bold mb-4 flex justify-between">
+                    <span>금융 시뮬레이터</span>
+                    <span class="text-blue-400 cursor-pointer">전체보기 <i class="fas fa-chevron-right ml-1"></i></span>
+                </h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-slate-800 p-3 rounded text-center cursor-pointer hover:bg-slate-700 transition">
+                        <i class="fas fa-calculator text-slate-500 mb-2"></i>
+                        <p class="text-[10px] font-bold">선물환 계산기</p>
+                    </div>
+                    <div class="bg-slate-800 p-3 rounded text-center cursor-pointer hover:bg-slate-700 transition">
+                        <i class="fas fa-shield-virus text-slate-500 mb-2"></i>
+                        <p class="text-[10px] font-bold">K-SURE 보험료</p>
+                    </div>
+                    <div class="bg-slate-800 p-3 rounded text-center cursor-pointer hover:bg-slate-700 transition">
+                        <i class="fas fa-chart-area text-slate-500 mb-2"></i>
+                        <p class="text-[10px] font-bold">스트레스 테스트</p>
+                    </div>
+                    <div class="bg-slate-800 p-3 rounded text-center cursor-pointer hover:bg-slate-700 transition">
+                        <i class="fas fa-file-invoice text-slate-500 mb-2"></i>
+                        <p class="text-[10px] font-bold">회계 자동 전표</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card rounded-lg p-5 border-t-2 border-green-500/50">
+                <h3 class="text-xs font-bold mb-3 uppercase tracking-tighter">자동화 리포트 상태</h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center text-[11px]">
+                        <span class="text-slate-500">외환 증빙 서류</span>
+                        <span class="text-green-500 font-bold">최신화 완료</span>
+                    </div>
+                    <div class="flex justify-between items-center text-[11px]">
+                        <span class="text-slate-500">국세청 제출용 파일</span>
+                        <span class="text-blue-400 font-bold">생성 가능</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
 
 </body>
 </html>
