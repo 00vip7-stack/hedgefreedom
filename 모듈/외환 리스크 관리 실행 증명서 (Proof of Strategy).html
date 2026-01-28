@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { background: #f1f5f9; display: flex; justify-content: center; padding: 60px 20px; font-family: sans-serif; }
+        .card { background: white; width: 100%; max-width: 700px; padding: 40px; border-radius: 20px; box-shadow: 0 20px 30px rgba(0,0,0,0.1); border-top: 15px solid #2563eb; }
+        .tag { background: #2563eb; color: white; padding: 5px 12px; border-radius: 50px; font-size: 12px; font-weight: bold; margin-bottom: 20px; display: inline-block; }
+        h1 { font-size: 32px; color: #1e293b; margin: 0 0 20px 0; overflow-wrap: break-word; }
+        .content { background: #f8fafc; padding: 25px; border-radius: 12px; line-height: 1.8; color: #334155; white-space: pre-wrap; border: 1px solid #e2e8f0; font-size: 16px; margin-bottom: 20px; }
+        .img-box { width: 100%; border-radius: 12px; overflow: hidden; margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .img-box img { width: 100%; height: auto; display: block; }
+        .footer { margin-top: 30px; font-size: 12px; color: #94a3b8; text-align: right; border-top: 1px solid #eee; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="tag">REPORT</div>
+        <h1>제목없음</h1>
+        <div class="content">[제 2026-FX-001호] 외환 리스크 관리 실행 증명서 (Proof of Strategy)
+
+1. 실행 개요
+
+실행 일시: 2026년 1월 27일 22:00 (KST)
+
+실행 주체: FX-Guardian 자동화 레이어 (지능형 에이전트)
+
+대상 통화: USD / KRW
+
+거래 유형: 내부 매칭(Matching) 및 잔여분 선물환(Forward) 체결
+
+
+2. 전략 수립 근거 (Compliance)
+
+본 실행은 귀사의 [2026년도 외환 리스크 관리 지침] 제4조(헤지 실행 요건) 및 제7조(실무자 면책)에 의거하여 다음과 같은 시스템 로직에 의해 결정되었습니다.
+
+근거 1 (시장 상황): 
+현재 환율(1,345.50원)이 사내 설정 '헤지 실행 가이드라인' 상한선(1,340.00원)을 상향 돌파함.
+
+근거 2 (데이터 신뢰도): 
+ERP(더존 Amaranth 10) 연동 데이터 분석 결과, 2026년 2월 수금 예정액의 신뢰도가 95.8%로 측정되어 내부 매칭 대상에 포함됨.
+
+근거 3 (최적화 권고): 
+전체 노출액 중 70%는 내부 매칭으로 리스크를 제거하였으며, 남은 30%(Net Exposure)에 대해서만 외부 헤지를 실행하여 금융 비용을 최소화함.
+
+
+3. 상세 실행 내역
+
+구분	내역	비고
+총 외화 노출액	$ 1,000,000	2026년 2월물 합계
+내부헤지(Matching)	$ 700,000	수입 결제 대금과 상계 완료
+
+외부헤지(Forward)	$ 300,000	제휴 은행(OO은행) 계약 체결
+
+체결 환율	1,345.20 원	실시간 최저가(Best Quote) 적용
+
+
+4. 면책 사항 (Shield Clause)
+
+규정 준수 확인: 
+본 실행은 실무자의 개별적인 주관이나 예측이 배제된 채, 시스템에 사전 설정된 '사내 환리스크 관리 알고리즘'에 의해 자동 수행되었습니다.
+
+책임 소재 차단: 
+본 문서는 시스템이 생성한 디지털 인증서로, 본 건 실행과 관련하여 발생하는 사후적 환율 변동에 따른 기회비용은 사내 규정에 따라 실무자의 과실로 간주되지 않음을 증명합니다.
+
+무결성 입증: 
+본 리포트의 데이터는 수정 불가능한 로그로 기록되었으며, 실행 당시의 시장 환율과 ERP 데이터가 정확히 일치함을 보증합니다.
+
+2026년 1월 27일
+
+FX-Guardian 자동화 시스템 인증 (인)
+
+확인: [기업명] 재무통제 자동화 엔진
+
+
+
+</div>
+        
+        <div class="footer">HedgeFreedom | 2026. 1. 27. 오후 10:02:26</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+2026-01-27 01:13:49.121 GMT [30016] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:13:49.121 GMT [30016] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:13:49.122 GMT [30016] FATAL:  could not open directory "D:/hedgepro/dan5522/share/timezonesets": No such file or directory
+2026-01-27 01:13:49.122 GMT [30016] HINT:  This may indicate an incomplete PostgreSQL installation, or that the file "D:/hedgepro/dan5522/bin/postgres.exe" has been moved away from its proper location.
+2026-01-27 01:13:49.589 GMT [106816] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:13:49.589 GMT [106816] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:13:49.589 GMT [106816] FATAL:  could not open directory "D:/hedgepro/dan5522/share/timezonesets": No such file or directory
+2026-01-27 01:13:49.589 GMT [106816] HINT:  This may indicate an incomplete PostgreSQL installation, or that the file "D:/hedgepro/dan5522/bin/postgres.exe" has been moved away from its proper location.
+2026-01-27 01:14:02.156 GMT [91472] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:14:02.156 GMT [91472] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:14:02.156 GMT [91472] FATAL:  could not open directory "D:/hedgepro/dan5522/share/timezonesets": No such file or directory
+2026-01-27 01:14:02.156 GMT [91472] HINT:  This may indicate an incomplete PostgreSQL installation, or that the file "D:/hedgepro/dan5522/bin/postgres.exe" has been moved away from its proper location.
+2026-01-27 01:14:02.284 GMT [106540] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:14:02.285 GMT [106540] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:14:02.285 GMT [106540] FATAL:  could not open directory "D:/hedgepro/dan5522/share/timezonesets": No such file or directory
+2026-01-27 01:14:02.285 GMT [106540] HINT:  This may indicate an incomplete PostgreSQL installation, or that the file "D:/hedgepro/dan5522/bin/postgres.exe" has been moved away from its proper location.
+2026-01-27 01:14:06.758 GMT [103488] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:14:06.758 GMT [103488] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:14:06.758 GMT [103488] FATAL:  could not open directory "D:/hedgepro/dan5522/share/timezonesets": No such file or directory
+2026-01-27 01:14:06.758 GMT [103488] HINT:  This may indicate an incomplete PostgreSQL installation, or that the file "D:/hedgepro/dan5522/bin/postgres.exe" has been moved away from its proper location.
+2026-01-27 01:14:06.894 GMT [100216] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:14:06.894 GMT [100216] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:14:06.894 GMT [100216] FATAL:  could not open directory "D:/hedgepro/dan5522/share/timezonesets": No such file or directory
+2026-01-27 01:14:06.894 GMT [100216] HINT:  This may indicate an incomplete PostgreSQL installation, or that the file "D:/hedgepro/dan5522/bin/postgres.exe" has been moved away from its proper location.
+2026-01-27 01:14:19.532 GMT [23940] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:14:19.532 GMT [23940] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:14:19.532 GMT [23940] FATAL:  could not open directory "D:/hedgepro/dan5522/share/timezonesets": No such file or directory
+2026-01-27 01:14:19.532 GMT [23940] HINT:  This may indicate an incomplete PostgreSQL installation, or that the file "D:/hedgepro/dan5522/bin/postgres.exe" has been moved away from its proper location.
+2026-01-27 01:14:19.670 GMT [52924] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:14:19.670 GMT [52924] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:14:19.670 GMT [52924] FATAL:  could not open directory "D:/hedgepro/dan5522/share/timezonesets": No such file or directory
+2026-01-27 01:14:19.670 GMT [52924] HINT:  This may indicate an incomplete PostgreSQL installation, or that the file "D:/hedgepro/dan5522/bin/postgres.exe" has been moved away from its proper location.
+2026-01-27 01:32:48.247 GMT [27688] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:32:48.248 GMT [27688] LOG:  could not open directory "D:/hedgepro/dan5522/share/timezone": No such file or directory
+2026-01-27 01:32:48.248 GMT [27688] FATAL:  could not open directory "D:/hedgepro/dan5522/share/timezonesets": No such file or directory
+2026-01-27 01:32:48.248 GMT [27688] HINT:  This may indicate an incomplete PostgreSQL installation, or that the file "D:/hedgepro/dan5522/bin/postgres.exe" has been moved away from its proper location.

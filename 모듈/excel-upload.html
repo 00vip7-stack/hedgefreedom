@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 엑셀 업로드</title>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        body { font-family: "Malgun Gothic", "맑은 고딕", Dotum, "돋움", sans-serif; background: #eef1f6; color: #333; margin: 0; }
+        .header { background: #fff; border-bottom: 2px solid #4a90e2; height: 45px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
+        .logo { font-size: 14px; font-weight: bold; color: #4a90e2; padding: 0 10px; border-right: 1px solid #ddd; }
+        .system-name { font-size: 13px; color: #333; font-weight: 600; }
+        .workspace { padding: 40px 20px; max-width: 700px; margin: 0 auto; }
+        .upload-box { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 30px; text-align: center; margin-bottom: 30px; }
+        .file-input { margin: 20px 0; }
+        .result-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 30px; }
+        .result-table th, .result-table td { border: 1px solid #e0e0e0; padding: 7px 10px; text-align: center; }
+        .result-table th { background: #e8edf2; font-weight: bold; }
+        .summary { background: #f5f7fa; border: 1px solid #cfd8dc; border-radius: 4px; padding: 18px; margin-top: 24px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">HEDGEFREEDOM</div>
+        <div class="system-name">엑셀 업로드</div>
+    </div>
+    <div class="menu-bar" style="margin-bottom:18px;">
+        <a href="index.html#dashboard" class="menu-item">대시보드</a>
+        <a href="index.html#trade-input" class="menu-item">거래관리</a>
+        <a href="index.html#internal-hedge" class="menu-item">내부헤지</a>
+        <a href="index.html#hedge-strategy" class="menu-item">외부헤지</a>
+        <a href="index.html#profit-analysis" class="menu-item">손익분석</a>
+        <a href="index.html#report" class="menu-item">리포트</a>
+        <a href="index.html#excel-upload" class="menu-item active">엑셀업로드</a>
+        <a href="index.html#digital-proof" class="menu-item">디지털면책증명서</a>
+        <a href="index.html" class="menu-item">모듈홈</a>
+    </div>
+    <div class="workspace">
+        <div style="margin-top:32px; text-align:right;">
+            <button onclick="location.href='디지털면책증명서.html'" style="background:#1976d2; color:#fff; border:none; border-radius:4px; padding:10px 22px; font-size:14px; cursor:pointer;">다음: 디지털면책증명서 모듈 →</button>
+        </div>
+        <h2>ERP 집계 엑셀 업로드</h2>
+        <div class="upload-box">
+            <input type="file" class="file-input" id="excelFile" accept=".xlsx,.xls,.csv">
+            <div>ERP(더존 등)에서 추출한 집계표를 업로드하세요.</div>
+        </div>
+        <div id="kpi"></div>
+        <div id="output"></div>
+        <div id="summary"></div>
+        .kpi-row { display: flex; gap: 18px; margin-bottom: 18px; }
+        .kpi-card { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 4px; flex: 1; padding: 18px; text-align: center; }
+        .kpi-label { font-size: 12px; color: #666; margin-bottom: 8px; }
+        .kpi-value { font-size: 22px; font-weight: bold; color: #333; }
+        .kpi-main { color: #1976d2; font-size: 26px; }
+    </div>
+    <script>
+        document.getElementById('excelFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const data = evt.target.result;
+                const workbook = XLSX.read(data, {type: 'binary'});
+                const sheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[sheetName];
+                const json = XLSX.utils.sheet_to_json(sheet, {header:1});
+                renderTable(json);
+                processMatching(json);
+            };
+            reader.readAsBinaryString(file);
+        });
+
+        function renderTable(data) {
+            if (!data || data.length < 2) {
+                document.getElementById('output').innerHTML = '<div style="color:#d32f2f;">엑셀 데이터가 올바르지 않습니다.</div>';
+                return;
+            }
+            let html = '<table class="result-table"><thead><tr>';
+            data[0].forEach(h => html += `<th>${h}</th>`);
+            html += '</tr></thead><tbody>';
+            for (let i=1; i<data.length; i++) {
+                html += '<tr>';
+                data[i].forEach(cell => html += `<td>${cell ?? ''}</td>`);
+                html += '</tr>';
+            }
+            html += '</tbody></table>';
+            document.getElementById('output').innerHTML = html;
+        }
+
+        // 수출-수입 만기일 매칭 및 집계
+        function processMatching(data) {
+            if (!data || data.length < 2) {
+                document.getElementById('summary').innerHTML = '';
+                document.getElementById('kpi').innerHTML = '';
+                return;
+            }
+            // 헤더 인덱스 추출
+            const header = data[0];
+            const idx = {
+                direction: header.findIndex(h => h.includes('수출') || h.includes('direction')),
+                amount: header.findIndex(h => h.includes('금액') || h.toLowerCase().includes('amount')),
+                maturity: header.findIndex(h => h.includes('만기') || h.toLowerCase().includes('expected'))
+            };
+            if (idx.direction < 0 || idx.amount < 0 || idx.maturity < 0) {
+                document.getElementById('summary').innerHTML = '<div style="color:#d32f2f;">수출/수입, 금액, 만기일 컬럼이 필요합니다.</div>';
+                document.getElementById('kpi').innerHTML = '';
+                return;
+            }
+            // 데이터 파싱
+            const trades = [];
+            for (let i=1; i<data.length; i++) {
+                const row = data[i];
+                if (!row[idx.direction] || !row[idx.amount] || !row[idx.maturity]) continue;
+                trades.push({
+                    direction: row[idx.direction].toString().includes('수출') || row[idx.direction].toString().toLowerCase().includes('receive') ? '수출' : '수입',
+                    amount: Number(row[idx.amount]),
+                    maturity: row[idx.maturity].toString().slice(0,10)
+                });
+            }
+            // 기간별 집계 (월간/주간/일간)
+            const byPeriod = { 월간: {}, 주간: {}, 일간: {} };
+            trades.forEach(tr => {
+                const date = new Date(tr.maturity);
+                if (isNaN(date)) return;
+                const ym = date.getFullYear() + '-' + String(date.getMonth()+1).padStart(2,'0');
+                const yw = date.getFullYear() + '-W' + getWeekNumber(date);
+                const yd = date.toISOString().slice(0,10);
+                [ ['월간',ym], ['주간',yw], ['일간',yd] ].forEach(([type,key]) => {
+                    if (!byPeriod[type][key]) byPeriod[type][key] = {수출:0,수입:0};
+                    byPeriod[type][key][tr.direction] += tr.amount;
+                });
+            });
+            // KPI 계산 (전체 합계)
+            let totalExport = 0, totalImport = 0, totalNetting = 0;
+            Object.values(byPeriod['월간']).forEach(val => {
+                totalExport += val.수출;
+                totalImport += val.수입;
+                totalNetting += Math.min(val.수출, val.수입);
+            });
+            // KPI 카드 표시
+            let kpiHtml = '<div class="kpi-row">';
+            kpiHtml += `<div class="kpi-card"><div class="kpi-label">총 수출 합계</div><div class="kpi-value">${totalExport.toLocaleString()}</div></div>`;
+            kpiHtml += `<div class="kpi-card"><div class="kpi-label">총 수입 합계</div><div class="kpi-value">${totalImport.toLocaleString()}</div></div>`;
+            kpiHtml += `<div class="kpi-card"><div class="kpi-label">내부 상계(네팅) 가능</div><div class="kpi-value kpi-main">${totalNetting.toLocaleString()}</div></div>`;
+            kpiHtml += '</div>';
+            document.getElementById('kpi').innerHTML = kpiHtml;
+            // 요약 HTML 생성
+            let html = '<div class="summary"><b>만기일 기준 집계</b><br><br>';
+            ['월간','주간','일간'].forEach(type => {
+                html += `<b>${type}</b><table class="result-table"><thead><tr><th>기간</th><th>수출 합계</th><th>수입 합계</th><th>내부 상계(최소값)</th></tr></thead><tbody>`;
+                Object.entries(byPeriod[type]).sort().forEach(([key,val]) => {
+                    html += `<tr><td>${key}</td><td>${val.수출.toLocaleString()}</td><td>${val.수입.toLocaleString()}</td><td style="color:#1976d2;font-weight:bold;">${Math.min(val.수출,val.수입).toLocaleString()}</td></tr>`;
+                });
+                html += '</tbody></table><br>';
+            });
+            html += '<div style="color:#1976d2; margin-top:10px;">내부 상계(네팅) 가능한 금액 = 수출/수입 중 작은 값</div></div>';
+            document.getElementById('summary').innerHTML = html;
+        }
+        // 주차 구하기
+        function getWeekNumber(d) {
+            d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+            const yearStart = new Date(Date.UTC(d.getFullYear(),0,1));
+            const weekNo = Math.ceil((((d - yearStart) / 86400000) + yearStart.getUTCDay()+1)/7);
+            return String(weekNo).padStart(2,'0');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2. 거래관리</title>
+    <style>
+        body { font-family: "Malgun Gothic", "맑은 고딕", Dotum, "돋움", sans-serif; background: #eef1f6; color: #333; margin: 0; }
+        .header { background: #fff; border-bottom: 2px solid #4a90e2; height: 45px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
+        .logo { font-size: 14px; font-weight: bold; color: #4a90e2; padding: 0 10px; border-right: 1px solid #ddd; flex: 0 0 auto; }
+        #fx-rate-header { flex: 1 1 auto; text-align: right; }
+        .system-name { font-size: 13px; color: #333; font-weight: 600; }
+        .menu-bar { background: #fff; border-bottom: 1px solid #ddd; height: 35px; display: flex; align-items: center; padding: 0 10px; }
+        .menu-item { padding: 8px 15px; min-width: 90px; text-align: center; color: #555; cursor: pointer; font-size: 12px; border-right: 1px solid #e5e5e5; background: #fafafa; text-decoration: none; display: inline-block; box-sizing: border-box; }
+        .menu-item:last-child { border-right: none; }
+        .menu-item.active { background: #4a90e2; color: #fff; font-weight: bold; }
+        .workspace { padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .page-title { background: #fff; padding: 10px 15px; margin-bottom: 18px; border: 1px solid #ddd; font-size: 15px; font-weight: bold; color: #333; display: flex; justify-content: space-between; align-items: center; }
+        .breadcrumb { font-size: 11px; color: #999; font-weight: normal; }
+        .panel { background: #fff; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 18px; }
+        .panel-header { background: linear-gradient(to bottom, #f5f7fa 0%, #e8edf2 100%); padding: 10px 18px; border-bottom: 1px solid #ddd; font-size: 13px; font-weight: bold; color: #333; }
+        .panel-body { padding: 18px; }
+        .trade-form { max-width: 480px; margin: 0 auto; }
+        .form-group { margin-bottom: 15px; display: flex; align-items: center; }
+        .form-label { width: 120px; background: #f8f8f8; border: 1px solid #d5d5d5; padding: 6px 10px; font-size: 12px; font-weight: bold; color: #333; }
+        .form-input { flex: 1; border: 1px solid #d5d5d5; padding: 6px 10px; font-size: 12px; }
+        .form-input:focus { outline: none; border-color: #4a90e2; }
+        .form-input:disabled { background: #f5f5f5; color: #999; }
+        .form-actions { text-align: right; margin-top: 18px; }
+        .form-btn { width: 120px; background: #4a90e2; color: #fff; border: none, cursor: pointer; padding: 8px 0; font-size: 13px; border-radius: 2px; }
+        .trade-list-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 24px; }
+        .trade-list-table th, .trade-list-table td { border: 1px solid #e0e0e0; padding: 7px 10px; text-align: center; }
+        .trade-list-table th { background: #e8edf2; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <!-- Ensure header consistency across all tabs -->
+    <div class="header">
+        <div class="logo">HEDGEFREEDOM</div>
+        <div id="fx-rate-header" style="font-size:13px; color:#1976d2; margin-left:auto; display:flex; gap:18px; align-items:center;">
+            <span><b>USD/KRW</b> 1,325.50 <span style="color:#d32f2f;">+2.10</span> <span style="font-size:11px; color:#888;">(+0.16%)</span></span>
+            <span><b>EUR/KRW</b> 1,420.80 <span style="color:#1976d2;">-1.50</span> <span style="font-size:11px; color:#888;">(-0.11%)</span></span>
+            <span><b>JPY/KRW</b> 9.85 <span style="color:#d32f2f;">+0.02</span> <span style="font-size:11px; color:#888;">(+0.20%)</span></span>
+            <span style="border-left:1px solid #e0e0e0; padding-left:14px; color:#333;">
+                <b>달러인덱스(DXY)</b> 104.25 <span style="color:#1976d2;">+0.12</span> <span style="font-size:11px; color:#888;">(+0.11%)</span>
+            </span>
+        </div>
+    </div>
+    <div class="menu-bar">
+        <a href="1.dashboard.html" class="menu-item">대시보드</a>
+        <a href="2.trade-input.html" class="menu-item active">거래관리</a>
+        <a href="3.internal-hedge.html" class="menu-item">내부헤지</a>
+        <a href="4.hedge-strategy.html" class="menu-item">외부헤지</a>
+        <a href="5.profit-analysis.html" class="menu-item">손익분석</a>
+        <a href="6.report.html" class="menu-item">리포트</a>
+        <a href="7.excel-upload.html" class="menu-item">엑셀업로드</a>
+    </div>
+    <div class="workspace">
+        <div style="font-size:22px; font-weight:bold; color:#1976d2; margin-bottom:8px; letter-spacing:1px;">거래관리 모듈</div>
+        <div id="analysisDiv" style="margin-bottom:16px; color:#1976d2; font-weight:bold; display:none;"></div>
+        <table class="trade-list-table" id="tradeTable">
+            <thead>
+                <tr>
+                    <th>거래ID</th>
+                    <th>거래일자</th>
+                    <th>통화</th>
+                    <th>금액</th>
+                    <th>만기일</th>
+                    <th>헤지상태</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JS로 데이터 렌더링 -->
+            </tbody>
+        </table>
+        </script>
+    </div>
+</body>
+</html>

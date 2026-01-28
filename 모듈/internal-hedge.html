@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내부 헤지전략 관리</title>
+    <style>
+        body {
+            font-family: "Malgun Gothic", "맑은 고딕", Dotum, "돋움", sans-serif;
+            background: #eef1f6;
+            color: #333;
+            margin: 0;
+        }
+        .header {
+            background: #fff;
+            border-bottom: 2px solid #4a90e2;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+        }
+        .logo {
+            font-size: 14px;
+            font-weight: bold;
+            color: #4a90e2;
+            padding: 0 10px;
+            border-right: 1px solid #ddd;
+        }
+        .system-name {
+            font-size: 13px;
+            color: #333;
+            font-weight: 600;
+        }
+        .menu-bar {
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+        .menu-item {
+            padding: 8px 15px;
+            color: #555;
+            cursor: pointer;
+            font-size: 12px;
+            border-right: 1px solid #e5e5e5;
+            background: #fafafa;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .menu-item.active {
+            background: #4a90e2;
+            color: #fff;
+            font-weight: bold;
+        }
+        .workspace {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .page-title {
+            background: #fff;
+            padding: 10px 15px;
+            margin-bottom: 18px;
+            border: 1px solid #ddd;
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .breadcrumb {
+            font-size: 11px;
+            color: #999;
+            font-weight: normal;
+        }
+        .panel {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 18px;
+        }
+        .panel-header {
+            background: linear-gradient(to bottom, #f5f7fa 0%, #e8edf2 100%);
+            padding: 10px 18px;
+            border-bottom: 1px solid #ddd;
+            font-size: 13px;
+            font-weight: bold;
+            color: #333;
+        }
+        .panel-body {
+            padding: 18px;
+        }
+        .kpi-row {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+        .kpi-card {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            flex: 1;
+            padding: 18px;
+            text-align: center;
+        }
+        .kpi-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .kpi-value {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+        }
+        .kpi-change {
+            font-size: 12px;
+            margin-top: 6px;
+        }
+        .kpi-up { color: #d32f2f; }
+        .kpi-down { color: #1976d2; }
+        .strategy-section {
+            display: flex;
+            gap: 24px;
+        }
+        .trade-list {
+            flex: 1;
+        }
+        .trade-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        .trade-table th, .trade-table td {
+            border: 1px solid #e0e0e0;
+            padding: 7px 10px;
+            text-align: center;
+        }
+        .trade-table th {
+            background: #e8edf2;
+            font-weight: bold;
+        }
+        .trade-table tr.selected {
+            background: #d6ebff;
+        }
+        .trade-table tr:hover {
+            background: #fffacd;
+            cursor: pointer;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 2px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .status-active {
+            background: #e6f3ff;
+            color: #0066cc;
+            border: 1px solid #99ccff;
+        }
+        .status-pending {
+            background: #fff3e0;
+            color: #ff6600;
+            border: 1px solid #ffcc99;
+        }
+        .status-complete {
+            background: #f0f0f0;
+            color: #666;
+            border: 1px solid #ccc;
+        }
+        .detail-panel {
+            flex: 1;
+            min-width: 340px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .form-label {
+            width: 120px;
+            background: #f8f8f8;
+            border: 1px solid #d5d5d5;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+        }
+        .form-input {
+            flex: 1;
+            border: 1px solid #d5d5d5;
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+        .form-input:disabled {
+            background: #f5f5f5;
+            color: #999;
+        }
+        .recommendation-box {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .recommendation-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        .recommendation-item {
+            font-size: 12px;
+            color: #333;
+            margin: 5px 0;
+            padding-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">HEDGE SYSTEM</div>
+        <div class="system-name">내부 헤지전략 관리</div>
+    </div>
+    <div class="menu-bar">
+        <a href="index.html#dashboard" class="menu-item">대시보드</a>
+        <a href="index.html#trade-input" class="menu-item">거래관리</a>
+        <a href="index.html#internal-hedge" class="menu-item active">내부헤지</a>
+        <a href="index.html#hedge-strategy" class="menu-item">외부헤지</a>
+        <a href="index.html#profit-analysis" class="menu-item">손익분석</a>
+        <a href="index.html#report" class="menu-item">리포트</a>
+        <a href="index.html#excel-upload" class="menu-item">엑셀업로드</a>
+        <a href="index.html#digital-proof" class="menu-item">디지털면책증명서</a>
+        <a href="index.html" class="menu-item">모듈홈</a>
+    </div>
+    <div class="workspace">
+        <div style="margin-top:32px; text-align:right;">
+            <button onclick="location.href='hedge-strategy.html'" style="background:#1976d2; color:#fff; border:none; border-radius:4px; padding:10px 22px; font-size:14px; cursor:pointer;">다음: 외부헤지 모듈 →</button>
+        </div>
+        <div class="page-title">
+            <span>내부 헤지전략</span>
+            <span class="breadcrumb">HOME &gt; 내부헤지전략</span>
+        </div>
+        <div class="header">
+            <div class="logo">HedgeFreedom</div>
+            <div id="fx-rate-header">환율: 1,350.00</div>
+            <div class="menu-bar">
+                <div class="menu-item">대시보드</div>
+                <div class="menu-item">거래관리</div>
+                <div class="menu-item">내부헤지</div>
+                <div class="menu-item">헤지전략</div>
+                <div class="menu-item">성과분석</div>
+                <div class="menu-item">리포트</div>
+                <div class="menu-item">엑셀업로드</div>
+                <div class="menu-item">경쟁사견적</div>
+            </div>
+        </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">평균 헤지비율</div>
+                        <div class="kpi-value">68%</div>
+                        <div class="kpi-change">(목표: 75%)</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">환차손익(월간)</div>
+                        <div class="kpi-value">+2,350,000원</div>
+                        <div class="kpi-change">(헤지효과: +210,000원)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="strategy-section">
+            <div class="trade-list">
+                <div class="panel">
+                    <div class="panel-header">거래 목록</div>
+                    <div class="panel-body">
+                        <table class="trade-table" id="tradeTable">
+                            <thead>
+                                <tr>
+                                    .header {
+                                        display: flex;
+                                        align-items: center;
+                                        height: 60px;
+                                        background: #fff;
+                                        border-bottom: 1px solid #e5e5e5;
+                                        padding: 0 32px;
+                                        font-size: 18px;
+                                    }
+                                    .logo {
+                                        flex: 0 0 auto;
+                                        font-weight: bold;
+                                        font-size: 22px;
+                                        color: #1a237e;
+                                        margin-right: 16px;
+                                    }
+                                    #fx-rate-header {
+                                        flex: 0 0 auto;
+                                        font-size: 16px;
+                                        color: #388e3c;
+                                        min-width: 160px;
+                                        margin-right: 24px;
+                                    }
+                                    .menu-bar {
+                                        display: flex;
+                                        flex: 1 1 auto;
+                                        justify-content: flex-start;
+                                        align-items: center;
+                                        gap: 0;
+                                    }
+            { id: 'TR-2026-0004', date: '2026-01-20', currency: 'JPY', amount: 5000000, maturity: '2026-03-01', status: '부분헤지' },
+            { id: 'TR-2026-0005', date: '2026-01-22', currency: 'USD', amount: 120000, maturity: '2026-02-28', status: '완전헤지' },
+            { id: 'TR-2026-0006', date: '2026-01-23', currency: 'EUR', amount: 95000, maturity: '2026-03-25', status: '미헤지' },
+            { id: 'TR-2026-0007', date: '2026-01-24', currency: 'USD', amount: 175000, maturity: '2026-04-15', status: '미헤지' },
+            { id: 'TR-2026-0008', date: '2026-01-25', currency: 'USD', amount: 210000, maturity: '2026-05-01', status: '부분헤지' },
+        ];
+        let selectedTrade = null;
+        function renderTradeTable() {
+            const tbody = document.querySelector('#tradeTable tbody');
+            tbody.innerHTML = trades.map((trade, idx) => {
+                let statusClass = 'status-active';
+                if(trade.status === '완전헤지') statusClass = 'status-complete';
+                else if(trade.status === '미헤지') statusClass = 'status-pending';
+                return `<tr onclick="selectTrade(${idx})"${selectedTrade===trade?' class="selected"':''}>
+                    <td>${idx+1}</td>
+                    <td>${trade.id}</td>
+                    <td>${trade.date}</td>
+                    <td>${trade.currency}</td>
+                    <td>${trade.amount.toLocaleString()}</td>
+                    <td>${trade.maturity}</td>
+                    <td><span class="status-badge ${statusClass}">${trade.status}</span></td>
+                </tr>`;
+            }).join('');
+        }
+        function selectTrade(idx) {
+            selectedTrade = trades[idx];
+            renderTradeTable();
+            renderStrategyDetail();
+        }
+        function renderStrategyDetail() {
+            const detail = document.getElementById('strategyDetail');
+            if(!selectedTrade) {
+                detail.innerHTML = '<div style="text-align:center; color:#999; padding:40px;">좌측 거래를 선택하세요</div>';
+                return;
+            }
+            detail.innerHTML = `
+                <div class="form-group">
+                    <div class="form-label">거래번호</div>
+                    <input type="text" class="form-input" value="${selectedTrade.id}" disabled>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">거래금액</div>
+                    <input type="text" class="form-input" value="${selectedTrade.currency} ${selectedTrade.amount.toLocaleString()}" disabled>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">만기일</div>
+                    <input type="text" class="form-input" value="${selectedTrade.maturity}" disabled>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">헤지상태</div>
+                    <input type="text" class="form-input" value="${selectedTrade.status}" disabled>
+                </div>
+                <div class="recommendation-box">
+                    <div class="recommendation-title">📊 내부 헤지 전략 권고</div>
+                    <div class="recommendation-item">• 그룹 내 상계, 외화예금 활용 등 내부 네팅 권장</div>
+                    <div class="recommendation-item">• 미헤지 거래는 즉시 내부 자금운용/상계 실행 필요</div>
+                    <div class="recommendation-item">• 만기별 노출액, 환율 변동성 분석 기반 전략 제시</div>
+                </div>
+                <div style="text-align:right; margin-top:18px;">
+                    <button class="form-input" style="width:120px; background:#4a90e2; color:#fff; border:none; cursor:pointer;">내부 헤지 실행</button>
+                </div>
+            `;
+        }
+        renderTradeTable();
+    </script>
+</body>
+</html>

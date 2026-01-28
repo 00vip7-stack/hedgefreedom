@@ -1,0 +1,10 @@
+2025-11-23 02:48:00.180 KST [2032] 로그:  PostgreSQL 15.7, compiled by Visual C++ build 1938, 64-bit 서버를 시작합니다.
+2025-11-23 02:48:00.190 KST [2032] 로그:  IPv6 바인드 실패, 대상 주소: "::": Only one usage of each socket address (protocol/network address/port) is normally permitted.
+	
+2025-11-23 02:48:00.190 KST [2032] 힌트:  다른 postmaster 가 포트 5432에서  이미 실행중인것 같습니다? 그렇지 않다면 몇 초를 기다렸다가 다시 시도해보십시오.
+2025-11-23 02:48:00.190 KST [2032] 로그:  IPv4 바인드 실패, 대상 주소: "0.0.0.0": Only one usage of each socket address (protocol/network address/port) is normally permitted.
+	
+2025-11-23 02:48:00.190 KST [2032] 힌트:  다른 postmaster 가 포트 5432에서  이미 실행중인것 같습니다? 그렇지 않다면 몇 초를 기다렸다가 다시 시도해보십시오.
+2025-11-23 02:48:00.190 KST [2032] 경고:  "*" 응당 소켓을 만들 수 없습니다
+2025-11-23 02:48:00.190 KST [2032] 치명적오류:  TCP/IP 소켓을 만들 수 없습니다.
+2025-11-23 02:48:00.194 KST [2032] 로그:  데이터베이스 시스템 서비스를 중지했습니다

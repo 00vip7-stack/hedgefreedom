@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환리스크 관리 대시보드 아키텍처</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            border-bottom: 3px solid #667eea;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            color: #667eea;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.8em;
+            margin: 30px 0 20px 0;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.3em;
+            margin: 20px 0 10px 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tech-badge {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        pre {
+            background: #2d3748;
+            color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        .diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 2px solid #dee2e6;
+        }
+
+        .flow-chart {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #764ba2;
+        }
+
+        .security-layer {
+            background: linear-gradient(to right, #ff6b6b15, #4ecdc415);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        ul {
+            margin: 15px 0 15px 40px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏦 환리스크 관리 대시보드</h1>
+            <p>실시간 환율 모니터링 & 자동 헤지 전략 시스템</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#overview">📋 시스템 개요</a></li>
+                <li><a href="#tech-stack">🛠 기술 스택</a></li>
+                <li><a href="#architecture">🏗 시스템 구조</a></li>
+                <li><a href="#data-flow">🔄 데이터 흐름</a></li>
+                <li><a href="#modules">🔧 핵심 모듈</a></li>
+                <li><a href="#security">🔒 보안 구조</a></li>
+                <li><a href="#deployment">🚀 배포 전략</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <!-- 시스템 개요 -->
+            <section id="overview">
+                <h2><span class="emoji">🎯</span>시스템 개요</h2>
+                
+                <h3>목적</h3>
+                <p>중소기업의 환리스크를 <strong>실시간으로 측정, 분석, 헤지</strong>하는 통합 관리 시스템</p>
+
+                <h3>핵심 기능</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>📊 26개 전문 계산기</h4>
+                        <p>VaR, Monte Carlo, 최적 헤지 비율 등</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>⏱ 실시간 환율 모니터링</h4>
+                        <p>1분 단위 자동 수집</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🎯 자동 헤지 전략 추천</h4>
+                        <p>AI 기반 최적 전략 제시</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📈 효과성 평가</h4>
+                        <p>월별 자동 리포트 생성</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔍 감사 추적</h4>
+                        <p>모든 거래/계산 이력 보존</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 기술 스택 -->
+            <section id="tech-stack">
+                <h2><span class="emoji">🛠</span>기술 스택</h2>
+
+                <h3>Backend</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">Node.js 18.x</span>
+                    <span class="tech-badge">Express.js</span>
+                    <span class="tech-badge">express-session</span>
+                    <span class="tech-badge">bcryptjs</span>
+                    <span class="tech-badge">helmet</span>
+                    <span class="tech-badge">node-cron</span>
+                </div>
+
+                <h3>Frontend</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">Vanilla JavaScript</span>
+                    <span class="tech-badge">Chart.js</span>
+                    <span class="tech-badge">HTML5 + CSS3</span>
+                </div>
+
+                <h3>데이터</h3>
+                <div class="info-box">
+                    <strong>JSON 기반 파일 시스템 (No DB)</strong>
+                    <ul>
+                        <li><code>input/</code> - 고객 거래 데이터</li>
+                        <li><code>source/</code> - 외부 API 데이터</li>
+                        <li><code>computed/</code> - 계산 결과</li>
+                    </ul>
+                </div>
+
+                <h3>외부 API</h3>
+                <table>
+                    <tr>
+                        <th>API</th>
+                        <th>용도</th>
+                    </tr>
+                    <tr>
+                        <td>frankfurter.app</td>
+                        <td>실시간 환율</td>
+                    </tr>
+                    <tr>
+                        <td>FRED API</td>
+                        <td>미국 경제 지표</td>
+                    </tr>
+                    <tr>
+                        <td>한국은행 ECOS</td>
+                        <td>한국 경제 지표</td>
+                    </tr>
+                    <tr>
+                        <td>수출입은행</td>
+                        <td>공식 고시환율</td>
+                    </tr>
+                    <tr>
+                        <td>CBOE</td>
+                        <td>VIX 지수</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- 시스템 구조 -->
+            <section id="architecture">
+                <h2><span class="emoji">🏗</span>시스템 구조</h2>
+
+                <div class="diagram">
+                    <h3>전체 아키텍처</h3>
+                    <pre>
+┌─────────────────────────────────────────────────────┐
+│                   사용자 브라우저                      │
+│  (Chrome/Edge/Safari - 로그인, 거래입력, 대시보드)    │
+└────────────────┬────────────────────────────────────┘
+                 │ HTTPS
+                 ▼
+┌─────────────────────────────────────────────────────┐
+│                Express.js 서버                        │
+│  ┌─────────────────────────────────────────────┐   │
+│  │ Middleware Layer                             │   │
+│  │  • helmet (보안)                             │   │
+│  │  • express-session (세션)                    │   │
+│  │  • cookieParser                              │   │
+│  │  • rateLimit (API 제한)                      │   │
+│  │  • securityValidator (입력 검증)             │   │
+│  └─────────────────────────────────────────────┘   │
+│                                                      │
+│  ┌─────────────────────────────────────────────┐   │
+│  │ API Routes                                   │   │
+│  │  • /api/trades       (거래 관리)            │   │
+│  │  • /api/calculator   (계산기 실행)          │   │
+│  │  • /api/dashboard    (대시보드 데이터)      │   │
+│  │  • /api/contract     (헤지 계약)            │   │
+│  │  • /api/effectiveness (효과성 평가)         │   │
+│  └─────────────────────────────────────────────┘   │
+└──────────────────┬──────────────────────────────────┘
+                   │
+                   ▼
+┌─────────────────────────────────────────────────────┐
+│              계산 엔진 (lib/)                         │
+│  26개 전문 계산기 (MVHR, VaR, Monte Carlo 등)       │
+└──────────────────┬──────────────────────────────────┘
+                   │
+                   ▼
+┌─────────────────────────────────────────────────────┐
+│              데이터 계층 (data/)                      │
+│  • input/    - 고객 거래 데이터                      │
+│  • source/   - 외부 API 데이터 (실시간)              │
+│  • computed/ - 계산 결과 (타임스탬프별 보존)         │
+└─────────────────────────────────────────────────────┘
+                    </pre>
+                </div>
+            </section>
+
+            <!-- 데이터 흐름 -->
+            <section id="data-flow">
+                <h2><span class="emoji">🔄</span>데이터 흐름</h2>
+
+                <div class="flow-chart">
+                    <h3>1️⃣ 거래 입력 플로우</h3>
+                    <pre>
+사용자
+  │
+  │ 1. 거래 입력
+  ▼
+POST /api/trades
+  │
+  │ 2. 입력 검증
+  ▼
+securityValidator
+  │
+  │ 3. 거래 저장
+  ▼
+data/input/trades/CUST-001/TRADE-001.json
+  │
+  │ 4. 자동 계산 트리거
+  ▼
+BackgroundEngine.calculateForTrade()
+  │
+  ├─ 5a. 외부 데이터 수집
+  │   ├─ frankfurter.app (환율)
+  │   ├─ FRED (거시경제)
+  │   └─ ECOS (한국 데이터)
+  │
+  ├─ 5b. 26개 계산기 실행
+  │   ├─ calculator-01 (최적 헤지 비율)
+  │   ├─ calculator-03 (예상환율)
+  │   ├─ calculator-04 (손익)
+  │   └─ ... (나머지 23개)
+  │
+  └─ 6. 결과 저장 (타임스탬프)
+      ▼
+  data/computed/trades/CUST-001/TRADE-001/20260127_143022.json
+  │
+  │ 7. 감사 로그
+  ▼
+audit-logs/2026-01/27.log
+                    </pre>
+                </div>
+
+                <div class="flow-chart">
+                    <h3>2️⃣ 실시간 데이터 수집 (자동)</h3>
+                    <pre>
+node-cron (1분마다)
+  │
+  ▼
+BackgroundEngine.collectLiveData()
+  │
+  ├─ frankfurter.app API
+  │   ▼
+  │  data/source/fx-rates/minute/USDKRW_20260127_0835.json
+  │
+  ├─ VIX API (시간별)
+  │   ▼
+  │  data/source/vix/hourly/VIX_2026012708.json
+  │
+  └─ FRED/ECOS (24시간마다)
+      ▼
+     data/source/macro/monthly/
+                    </pre>
+                </div>
+            </section>
+
+            <!-- 핵심 모듈 -->
+            <section id="modules">
+                <h2><span class="emoji">🔧</span>핵심 모듈</h2>
+
+                <h3>1. server.js (메인 서버)</h3>
+                <pre><code>// 역할: HTTP 서버, 라우팅, 미들웨어
+const PORT = 7860; // 허깅페이스 호환
+
+// 보안 미들웨어
+app.use(helmet());
+app.use(session({ secret: SESSION_SECRET }));
+
+// 핵심 라우트
+app.post('/api/trades', tradeController);
+app.get('/api/calculator/:id', calculatorController);
+app.get('/api/dashboard', dashboardController);</code></pre>
+
+                <h3>2. background-engine.js (백그라운드 엔진)</h3>
+                <pre><code>class BackgroundEngine {
+  // 거래별 26개 계산기 실행
+  async calculateForTrade(tradeId) {
+    const results = {};
+    results.hedgeRatio = await calculator01.calculate();
+    results.expectedRate = await calculator03.calculate();
+    // ... 나머지 24개
+    
+    // 타임스탬프별 저장 (Immutable)
+    this.saveResult(tradeId, results, timestamp);
+  }
+  
+  // 실시간 데이터 수집 (1분마다)
+  async collectLiveData() {
+    await this.fetchFXRates();
+    await this.fetchVIX();
+  }
+}</code></pre>
+
+                <h3>3. calculator-01-hedge-ratio.js (최적 헤지 비율)</h3>
+                <pre><code>// MVHR 알고리즘
+function calculateMVHR(trade, marketData) {
+  const rho = marketData.correlation; // 상관계수
+  const sigmaSpot = marketData.spotVolatility;
+  const sigmaForward = marketData.forwardVolatility;
+  
+  const hedgeRatio = rho * (sigmaSpot / sigmaForward);
+  
+  return {
+    ratio: hedgeRatio,
+    hedgeAmountKRW: trade.amount_krw * hedgeRatio
+  };
+}</code></pre>
+            </section>
+
+            <!-- 보안 구조 -->
+            <section id="security">
+                <h2><span class="emoji">🔒</span>보안 구조</h2>
+
+                <h3>3계층 데이터 분리</h3>
+                
+                <div class="security-layer">
+                    <h4>로컬 개발 환경</h4>
+                    <ul>
+                        <li>실제 고객 데이터 (CUST-001, CUST-002...)</li>
+                        <li>테스트 데이터 (ADMIN-*, TEST-*, DEMO-*)</li>
+                        <li>API 키 (.env)</li>
+                    </ul>
+                </div>
+
+                <div class="security-layer">
+                    <h4>GitHub (Private Repository)</h4>
+                    <ul>
+                        <li>소스 코드만</li>
+                        <li>테스트 데이터</li>
+                        <li>고객 데이터 제외 (.gitignore)</li>
+                    </ul>
+                </div>
+
+                <div class="security-layer">
+                    <h4>Hugging Face Space (Public)</h4>
+                    <ul>
+                        <li>실행 가능한 코드</li>
+                        <li>빈 데이터 구조만 (.gitkeep)</li>
+                        <li>민감 데이터 완전 차단</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ 보안 원칙</strong>
+                    <ul>
+                        <li>실제 고객 데이터는 절대 GitHub/Hugging Face에 업로드 금지</li>
+                        <li>API 키는 .env 파일로 관리 (Git 제외)</li>
+                        <li>모든 입력 데이터 검증 (XSS, SQL Injection 방지)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 배포 전략 -->
+            <section id="deployment">
+                <h2><span class="emoji">🚀</span>배포 전략</h2>
+
+                <h3>로컬 개발 환경</h3>
+                <pre><code># .env 설정
+DEV_MODE=true
+SESSION_SECRET=dev-secret
+PORT=3000
+
+# 서버 시작
+cd d:\hedgeBasic\backend
+node server.js
+
+# 접속
+http://localhost:3000</code></pre>
+
+                <h3>Hugging Face Space (Docker)</h3>
+                <pre><code>FROM node:18-alpine
+
+WORKDIR /app
+
+# 의존성 설치
+COPY backend/package*.json ./
+RUN npm ci --only=production
+
+# 필수 파일만 복사
+COPY backend/server.js ./
+COPY backend/lib/ ./lib/
+COPY backend/public/ ./public/
+
+# 환경 변수
+ENV PORT=7860
+ENV NODE_ENV=production
+
+# 서버 시작
+CMD ["node", "server.js"]</code></pre>
+
+                <div class="success-box">
+                    <h4>✅ 성능 최적화</h4>
+                    <ul>
+                        <li><strong>데이터 캐싱</strong>: 실시간 환율 1분 캐시</li>
+                        <li><strong>계산 결과 재사용</strong>: latest.json 활용</li>
+                        <li><strong>비동기 처리</strong>: 26개 계산기 병렬 실행</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h4>🔄 확장성</h4>
+                    <p>향후 추가 가능 기능:</p>
+                    <ul>
+                        <li>PostgreSQL/MongoDB 연동</li>
+                        <li>Redis 캐싱</li>
+                        <li>Webhook 알림 (Slack, 이메일)</li>
+                        <li>모바일 앱 (React Native)</li>
+                        <li>AI/ML 환율 예측 모델</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 개발 원칙 -->
+            <section>
+                <h2><span class="emoji">📝</span>개발 원칙</h2>
+
+                <h3>Zero Hardcoding</h3>
+                <pre><code>// ❌ 나쁜 예
+const hedgeRatio = 0.85;
+
+// ✅ 좋은 예
+const hedgeRatio = calculateMVHR(trade, marketData);</code></pre>
+
+                <h3>Immutable Data</h3>
+                <pre><code>// 계산 결과는 절대 수정 안 함
+const resultFile = `${tradeId}_${timestamp}.json`;
+fs.writeFileSync(resultFile, JSON.stringify(result));
+// 이후 이 파일은 읽기 전용</code></pre>
+
+                <h3>Append-Only Logs</h3>
+                <pre><code>// 모든 이력 보존 (삭제 금지)
+audit-logs/
+  └─ 2026-01/
+      ├─ 01.log
+      ├─ 02.log
+      └─ 27.log  ← 오늘 로그 (계속 추가만)</code></pre>
+            </section>
+        </div>
+
+        <footer>
+            <p><strong>작성일</strong>: 2026-01-27</p>
+            <p><strong>버전</strong>: 1.0</p>
+            <p><strong>작성자</strong>: GitHub Copilot</p>
+            <p style="margin-top: 20px; opacity: 0.7;">© 2026 HedgeFreedom. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // 부드러운 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 섹션 애니메이션
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease-out';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1. 대시보드</title>
+    <style>
+        body { font-family: "Malgun Gothic", "맑은 고딕", Dotum, "돋움", sans-serif; background: #eef1f6; color: #333; margin: 0; }
+        .header { background: #fff; border-bottom: 2px solid #4a90e2; height: 45px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
+        .logo { font-size: 14px; font-weight: bold; color: #4a90e2; padding: 0 10px; border-right: 1px solid #ddd; flex: 0 0 auto; }
+        #fx-rate-header { flex: 1 1 auto; text-align: right; }
+        .system-name { font-size: 13px; color: #333; font-weight: 600; }
+        .menu-bar { background: #fff; border-bottom: 1px solid #ddd; height: 35px; display: flex; align-items: center; padding: 0 10px; }
+        .menu-item { padding: 8px 15px; min-width: 90px; text-align: center; color: #555; cursor: pointer; font-size: 12px; border-right: 1px solid #e5e5e5; background: #fafafa; text-decoration: none; display: inline-block; box-sizing: border-box; }
+        .menu-item:last-child { border-right: none; }
+        .menu-item.active { background: #4a90e2; color: #fff; font-weight: bold; }
+        .workspace { padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .page-title { background: #fff; padding: 10px 15px; margin-bottom: 18px; border: 1px solid #ddd; font-size: 15px; font-weight: bold; color: #333; display: flex; justify-content: space-between; align-items: center; }
+        .breadcrumb { font-size: 11px; color: #999; font-weight: normal; }
+        .kpi-row { display: flex; gap: 18px; margin-bottom: 18px; }
+        .kpi-card { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 4px; flex: 1; padding: 18px; text-align: center; }
+        .kpi-label { font-size: 12px; color: #666; margin-bottom: 8px; }
+        .kpi-value { font-size: 22px; font-weight: bold; color: #333; }
+        .kpi-change { font-size: 12px; margin-top: 6px; }
+        .kpi-up { color: #d32f2f; }
+        .kpi-down { color: #1976d2; }
+        .section { background: #fff; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 18px; padding: 18px; }
+        .section-title { font-size: 14px; font-weight: bold; color: #333; margin-bottom: 12px; }
+        .fx-rate-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .fx-rate-table th, .fx-rate-table td { border: 1px solid #e0e0e0; padding: 7px 10px; text-align: center; }
+        .fx-rate-table th { background: #e8edf2; font-weight: bold; }
+        .trade-list-table { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 12px; }
+        .trade-list-table th, .trade-list-table td { border: 1px solid #e0e0e0; padding: 10px; text-align: center; }
+        .trade-list-table th { background: #f1f1f1; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">HEDGEFREEDOM</div>
+        <div id="fx-rate-header" style="font-size:13px; color:#1976d2; margin-left:auto; display:flex; gap:18px; align-items:center;">
+            <span><b>USD/KRW</b> 1,325.50 <span style="color:#d32f2f;">+2.10</span> <span style="font-size:11px; color:#888;">(+0.16%)</span></span>
+            <span><b>EUR/KRW</b> 1,420.80 <span style="color:#1976d2;">-1.50</span> <span style="font-size:11px; color:#888;">(-0.11%)</span></span>
+            <span><b>JPY/KRW</b> 9.85 <span style="color:#d32f2f;">+0.02</span> <span style="font-size:11px; color:#888;">(+0.20%)</span></span>
+            <span style="border-left:1px solid #e0e0e0; padding-left:14px; color:#333;">
+                <b>달러인덱스(DXY)</b> 104.25 <span style="color:#1976d2;">+0.12</span> <span style="font-size:11px; color:#888;">(+0.11%)</span>
+            </span>
+        </div>
+    </div>
+    <div class="menu-bar">
+        <a href="1.dashboard.html" class="menu-item active">대시보드</a>
+        <a href="2.trade-input.html" class="menu-item">거래관리</a>
+        <a href="3.internal-hedge.html" class="menu-item">내부헤지</a>
+        <a href="4.hedge-strategy.html" class="menu-item">외부헤지</a>
+        <a href="5.profit-analysis.html" class="menu-item">손익분석</a>
+        <a href="6.report.html" class="menu-item">리포트</a>
+        <a href="7.excel-upload.html" class="menu-item">엑셀업로드</a>
+        <a href="8.competitor-pricing.html" class="menu-item">경쟁사 가격비교</a>
+    </div>
+    <div class="workspace">
+        <div class="page-title">
+            <div>대시보드</div>
+            <div class="system-name">시스템 이름: FX-트레이딩-시스템</div>
+        </div>
+        <div class="kpi-row">
+            <div class="kpi-card">
+                <div class="kpi-label">총 외화노출액</div>
+                <div class="kpi-value">USD 1,250,000</div>
+                <div class="kpi-change kpi-up">▲ 5.2% (최근 1주)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">미헤지 거래</div>
+                <div class="kpi-value">3건 / USD 545,000</div>
+                <div class="kpi-change kpi-down">▼ 1건 감소</div>
+            </div>
+            <!-- 손익분석 section을 KPI 카드로 이동 -->
+            <div class="kpi-card">
+                <div class="kpi-label">헤지 전 손익</div>
+                <div class="kpi-value">-1,120,000원</div>
+                <div class="kpi-change">(예상)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">헤지 후 손익</div>
+                <div class="kpi-value">+450,000원</div>
+                <div class="kpi-change">(예상)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">헤지 효과</div>
+                <div class="kpi-value">+1,570,000원</div>
+                <div class="kpi-change">(월간 집계)</div>
+            </div>
+            <!-- 기존 평균 헤지비율/환차손익(월간) 카드는 손익분석 아래로 이동 -->
+            <div class="kpi-card">
+                <div class="kpi-label">평균 헤지비율</div>
+                <div class="kpi-value">68%</div>
+                <div class="kpi-change">(목표: 75%)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">환차손익(월간)</div>
+                <div class="kpi-value">+2,350,000원</div>
+                <div class="kpi-change">(헤지효과: +210,000원)</div>
+            </div>
+        </div>
+        <div class="section">
+            <!-- 실시간 환율 섹션은 헤더로 이동, 추후 실시간 연동 예정 -->
+        </div>
+        <div class="section">
+            <div class="section-title">실행 권고</div>
+            <ul>
+                <li>미헤지 거래 즉시 내부 헤지 실행 권고</li>
+                <li>환율 변동성 확대 시 외부 헤지 전략 검토</li>
+                <li>만기별 노출액 집중 관리 필요</li>
+            </ul>
+        </div>
+        <!-- 손익분석 section은 KPI 카드로 이동 -->
+        <table class="trade-list-table" id="tradeTable">
+            <thead>
+                <tr>
+                    <th>거래ID</th>
+                    <th>거래일자</th>
+                    <th>통화</th>
+                    <th>금액</th>
+                    <th>만기일</th>
+                    <th>헤지상태</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JS로 데이터 렌더링 -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function fwCalc() {
+            var amt = parseFloat(document.getElementById('fw_amt').value)||0;
+            var rate = parseFloat(document.getElementById('fw_rate').value)||0;
+            var exp = parseFloat(document.getElementById('fw_exp').value)||0;
+            var profit = (exp - rate) * amt;
+            document.getElementById('fw_result').innerText = amt && rate && exp ? profit.toLocaleString() + '원' : '';
+        }
+        function futCalc() {
+            var qty = parseFloat(document.getElementById('fut_qty').value)||0;
+            var entry = parseFloat(document.getElementById('fut_entry').value)||0;
+            var exit = parseFloat(document.getElementById('fut_exit').value)||0;
+            var profit = (exit - entry) * qty * 1000; // 1계약=1,000달러 가정
+            document.getElementById('fut_result').innerText = qty && entry && exit ? profit.toLocaleString() + '원' : '';
+        }
+        function insCalc() {
+            var amt = parseFloat(document.getElementById('ins_amt').value)||0;
+            var base = parseFloat(document.getElementById('ins_base').value)||0;
+            var exp = parseFloat(document.getElementById('ins_exp').value)||0;
+            var profit = (exp - base) * amt;
+            document.getElementById('ins_result').innerText = amt && base && exp ? profit.toLocaleString() + '원' : '';
+        }
+        function calc1() {
+            var amt = parseFloat(document.getElementById('amount1').value)||0;
+            var rate = parseFloat(document.getElementById('rate1').value)||0;
+            document.getElementById('result1').innerText = amt && rate ? (amt * rate).toLocaleString() + '원' : '';
+        }
+        function calc2() {
+            var amt = parseFloat(document.getElementById('amount2').value)||0;
+            var buy = parseFloat(document.getElementById('buy2').value)||0;
+            var sell = parseFloat(document.getElementById('sell2').value)||0;
+            var profit = (sell - buy) * amt;
+            document.getElementById('result2').innerText = amt && buy && sell ? profit.toLocaleString() + '원' : '';
+        }
+        function calc3() {
+            var amt = parseFloat(document.getElementById('amount3').value)||0;
+            var fee = parseFloat(document.getElementById('fee3').value)||0;
+            document.getElementById('result3').innerText = amt && fee ? ((amt * fee/100).toLocaleString() + '원') : '';
+        }
+        function calc4() {
+            var amt = parseFloat(document.getElementById('amount4').value)||0;
+            var hedge = parseFloat(document.getElementById('hedge4').value)||0;
+            document.getElementById('result4').innerText = amt && hedge ? ((amt * hedge/100).toLocaleString() + '원') : '';
+        }
+    </script>
+</body>
+</html>
