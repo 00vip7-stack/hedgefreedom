@@ -1,3 +1,6 @@
-[submodule "hedgeBasic"]
-    path = hedgeBasic
-    url = https://github.com/<owner>/<hedgeBasic-repo>.git
+git mv 이전폴더위치/hedgeBasic 새로운폴더위치/hedgeBasic
+git add .gitmodules
+git add .git/config
+git add 새로운폴더위치/hedgeBasic
+git commit -m "fix: move hedgeBasic submodule and update .gitmodules"
+git push
