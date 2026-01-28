@@ -1,0 +1,3 @@
+[submodule "hedgeBasic"]
+    path = hedgeBasic
+    url = https://github.com/00vip7-stack/hedgeBasic.git
