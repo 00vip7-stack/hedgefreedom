@@ -1,11 +1,790 @@
-
 <!DOCTYPE html>
 <!-- saved from url=(0064)sub2.html -->
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="HedgeFreedom - AI 기반 외환 헤지 리스크 관리 시스템. 26개의 전문 계산기로 환율 변동 리스크를 완벽하게 관리하세요.">
-    <meta name="keywords" content="외환헤지, 환율리스크, FX헤지, 선물환, 통화옵션, 리스크관리">
+    <title>HedgeFreedom - AI 기반 외환 헤지 리스크 관리 시스템</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="./HedgeFreedom - AI 기반 외환 헤지 리스크 관리 시스템_files/css2" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #d4af37;
+            --primary-dark: #b8941f;
+            --bg-dark: #0a0e27;
+            --bg-card: #1a1f3a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --accent: #4299e1;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary) 0%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--bg-dark);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
+        }
+        
+        /* Hero Section */
+        .hero {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--primary);
+            display: block;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Features Section */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        
+        /* Calculators Grid */
+        .calculators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .calculator-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .calculator-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+        }
+        
+        .calc-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--bg-dark);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+        
+        .calc-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .calc-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* Technology Stack */
+        .tech-stack {
+            background: rgba(26, 31, 58, 0.5);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .tech-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+        
+        .tech-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+        
+        .tech-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tech-name {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(66, 153, 225, 0.1) 100%);
+            border-radius: 30px;
+            padding: 4rem;
+            text-align: center;
+            margin: 4rem 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--bg-dark);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+            display: inline-block;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 30px rgba(212, 175, 55, 0.5);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+        }
+        
+        /* Footer */
+        .footer {
+            background: rgba(10, 14, 39, 0.95);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 3rem 2rem 2rem;
+            margin-top: 5rem;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            color: var(--text-secondary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .section-title { font-size: 2rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <span>🛡️</span>
+                <span>HedgeFreedom</span>
+            </div>
+            <nav class="nav-links">
+                <a href="sub2.html">주요 기능</a>
+                <a href="sub2.html">계산기</a>
+                <a href="sub2.html">기술 스택</a>
+                <a href="sub2.html">소개</a>
+            </nav>
+                <a href="/sub2.html" class="cta-button">시작하기 →</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>외환 헤지 리스크를<br>AI로 완벽하게 관리하세요</h1>
+        <p class="hero-subtitle">
+            26개의 전문 계산기와 AI 기반 분석으로<br>
+            환율 변동 리스크를 실시간으로 모니터링하고 최적화합니다
+        </p>
+        <div class="cta-buttons">
+                <a href="/sub2.html" class="btn-primary">무료로 시작하기</a>
+            <a href="sub2.html" class="btn-secondary">자세히 알아보기</a>
+            <a href="sub2.html" class="btn-secondary">서브2 페이지로 이동</a>
+        </div>
+        
+        <div class="hero-stats">
+            <div class="stat-item">
+                <span class="stat-number">26개</span>
+                <span class="stat-label">전문 계산기</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">실시간</span>
+                <span class="stat-label">환율 모니터링</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">K-IFRS</span>
+                <span class="stat-label">회계 기준 준수</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">AI 분석</span>
+                <span class="stat-label">예측 및 최적화</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <h2 class="section-title">핵심 기능</h2>
+        <p class="section-subtitle">HedgeFreedom이 제공하는 강력한 기능들</p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">📊</span>
+                <h3 class="feature-title">26개 전문 계산기</h3>
+                <p class="feature-description">
+                    헤지 비율, VaR, 옵션 가격, 몬테카를로 시뮬레이션 등 
+                    외환 헤지에 필요한 모든 계산을 한 곳에서 수행하세요.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">🤖</span>
+                <h3 class="feature-title">AI 예측 엔진</h3>
+                <p class="feature-description">
+                    머신러닝 기반 환율 예측과 신뢰도 분석으로
+                    데이터 기반 의사결정을 지원합니다.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">📈</span>
+                <h3 class="feature-title">실시간 리스크 분석</h3>
+                <p class="feature-description">
+                    VaR, 스트레스 테스트, 시나리오 분석으로
+                    포트폴리오 리스크를 실시간으로 모니터링합니다.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">💼</span>
+                <h3 class="feature-title">K-IFRS 회계 지원</h3>
+                <p class="feature-description">
+                    헤지회계 처리, 효과성 테스트, 재무제표 영향 분석까지
+                    회계 기준을 완벽하게 준수합니다.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">🎯</span>
+                <h3 class="feature-title">전략 최적화</h3>
+                <p class="feature-description">
+                    포트폴리오 최적화, 동적 재조정, 비용-효과 분석으로
+                    최적의 헤지 전략을 제시합니다.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">🌍</span>
+                <h3 class="feature-title">ESG 리스크 평가</h3>
+                <p class="feature-description">
+                    환경·사회·지배구조 요인이 환율에 미치는 영향을
+                    분석하고 장기 트렌드를 예측합니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculators Section -->
+    <section class="section" id="calculators">
+        <h2 class="section-title">26개 전문 계산기</h2>
+        <p class="section-subtitle">모든 외환 헤지 시나리오를 커버하는 완벽한 도구 세트</p>
+        
+        <div class="calculators-grid">
+            <div class="calculator-card">
+                <span class="calc-number">01</span>
+                <h4 class="calc-name">헤지 비율 계산기</h4>
+                <p class="calc-description">최적 헤지 비율과 필요 금액을 계산합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">02</span>
+                <h4 class="calc-name">헤지 수단 선택기</h4>
+                <p class="calc-description">선물환, 옵션, 스왑 중 최적 도구를 추천합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">03</span>
+                <h4 class="calc-name">결제 환율 예측</h4>
+                <p class="calc-description">미래 결제일의 예상 환율을 계산합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">04</span>
+                <h4 class="calc-name">손익 분석</h4>
+                <p class="calc-description">헤지 전략의 예상 손익을 시뮬레이션합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">05</span>
+                <h4 class="calc-name">옵션 프리미엄</h4>
+                <p class="calc-description">통화 옵션의 공정 가격을 계산합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">06</span>
+                <h4 class="calc-name">VaR 계산기</h4>
+                <p class="calc-description">Value at Risk로 최대 손실을 추정합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">07</span>
+                <h4 class="calc-name">환노출 분석</h4>
+                <p class="calc-description">통화별 노출 규모와 리스크를 평가합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">08</span>
+                <h4 class="calc-name">HLR 분석</h4>
+                <p class="calc-description">Highly Likely Relationship 테스트를 수행합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">09</span>
+                <h4 class="calc-name">후회 최소화</h4>
+                <p class="calc-description">헤지 후회를 최소화하는 전략을 제시합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">10</span>
+                <h4 class="calc-name">몬테카를로</h4>
+                <p class="calc-description">시뮬레이션으로 미래 환율 분포를 예측합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">11</span>
+                <h4 class="calc-name">스트레스 테스트</h4>
+                <p class="calc-description">극단적 시장 상황의 손익을 분석합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">12</span>
+                <h4 class="calc-name">델타 중립 포지션</h4>
+                <p class="calc-description">옵션과 선물의 델타 헤지를 계산합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">13</span>
+                <h4 class="calc-name">헤지 효과성 분석</h4>
+                <p class="calc-description">헤지 전략의 실제 효과를 측정합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">14</span>
+                <h4 class="calc-name">만기일 리스크</h4>
+                <p class="calc-description">헤지 만기일 불일치 리스크를 평가합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">15</span>
+                <h4 class="calc-name">VIX 충격 지수</h4>
+                <p class="calc-description">시장 변동성이 헤지에 미치는 영향을 분석합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">16</span>
+                <h4 class="calc-name">마진 변동 분석</h4>
+                <p class="calc-description">선물 헤지 시 필요한 증거금을 추적합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">17</span>
+                <h4 class="calc-name">헤지 비율 민감도</h4>
+                <p class="calc-description">헤지 비율 변화에 따른 손익을 분석합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">18</span>
+                <h4 class="calc-name">환전 시그널</h4>
+                <p class="calc-description">기술적 지표 기반 환전 타이밍을 제시합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">19</span>
+                <h4 class="calc-name">동적 재조정 신호</h4>
+                <p class="calc-description">시장 변화에 따른 포지션 재조정을 알립니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">20</span>
+                <h4 class="calc-name">교차 헤지 분석</h4>
+                <p class="calc-description">다른 통화로 헤지하는 효과성을 평가합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">21</span>
+                <h4 class="calc-name">포트폴리오 최적화</h4>
+                <p class="calc-description">여러 통화 포지션의 전체 리스크를 관리합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">22</span>
+                <h4 class="calc-name">세금 최적화</h4>
+                <p class="calc-description">헤지 손익의 세금 효율성을 분석합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">23</span>
+                <h4 class="calc-name">회계 처리 시뮬레이션</h4>
+                <p class="calc-description">K-IFRS 기준 회계 분개와 재무제표 영향을 계산합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">24</span>
+                <h4 class="calc-name">통화 바스켓 헤지</h4>
+                <p class="calc-description">여러 통화 조합 바스켓 전략을 분석합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">25</span>
+                <h4 class="calc-name">ESG 리스크 평가</h4>
+                <p class="calc-description">환경·사회·지배구조 요인의 환율 영향을 측정합니다</p>
+            </div>
+            
+            <div class="calculator-card">
+                <span class="calc-number">26</span>
+                <h4 class="calc-name">AI 예측 신뢰도</h4>
+                <p class="calc-description">AI 모델의 예측 신뢰도를 평가합니다</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="section" id="technology">
+        <h2 class="section-title">기술 스택</h2>
+        <p class="section-subtitle">최신 기술로 구축된 안정적이고 확장 가능한 시스템</p>
+        
+        <div class="tech-stack">
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-icon">⚡</div>
+                    <div class="tech-name">Node.js</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">📊</div>
+                    <div class="tech-name">Chart.js</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🎨</div>
+                    <div class="tech-name">Modern CSS</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🔒</div>
+                    <div class="tech-name">Security First</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🚀</div>
+                    <div class="tech-name">REST API</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🤖</div>
+                    <div class="tech-name">AI/ML</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section">
+        <div class="cta-section">
+            <h2>지금 바로 시작하세요</h2>
+            <p>
+                복잡한 외환 헤지 리스크 관리,<br>
+                HedgeFreedom과 함께라면 쉽고 정확합니다
+            </p>
+            <div class="cta-buttons">
+                <a href="sub2.html" class="btn-primary">무료 체험 시작</a>
+                <a href="https://github.com/00vip7-stack/hedgeBasic" class="btn-secondary">GitHub 보기</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>HedgeFreedom</h3>
+                <p>AI 기반 외환 헤지 리스크 관리 시스템</p>
+                <p>26개 전문 계산기로 완벽한 리스크 관리를 경험하세요</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>주요 기능</h3>
+                <a href="sub2.html">26개 계산기</a>
+                <a href="sub2.html">AI 예측 엔진</a>
+                <a href="sub2.html">실시간 리스크 분석</a>
+                <a href="sub2.html">K-IFRS 회계 지원</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>리소스</h3>
+                <a href="https://github.com/00vip7-stack/hedgeBasic">GitHub</a>
+                <a href="sub2.html">라이브 데모</a>
+                <a href="sub2.html">기술 문서</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>연락처</h3>
+                <p>기업 문의 및 파트너십</p>
+                <a href="mailto:contact@hedgefreedom.com">contact@hedgefreedom.com</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 HedgeFreedom. All rights reserved.</p>
+            <p>외환 헤지 리스크 관리의 새로운 기준</p>
+        </div>
+    </footer>
+
+
+</body></html>
     <title>HedgeFreedom - AI 기반 외환 헤지 리스크 관리 시스템</title>
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
@@ -790,797 +1569,3 @@
 
 
 </body></html>
-=======
-<!DOCTYPE html>
-<!-- saved from url=(0064)sub2.html -->
-<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="HedgeFreedom - AI 기반 외환 헤지 리스크 관리 시스템. 26개의 전문 계산기로 환율 변동 리스크를 완벽하게 관리하세요.">
-    <meta name="keywords" content="외환헤지, 환율리스크, FX헤지, 선물환, 통화옵션, 리스크관리">
-    <title>HedgeFreedom - AI 기반 외환 헤지 리스크 관리 시스템</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com/">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-    <link href="./HedgeFreedom - AI 기반 외환 헤지 리스크 관리 시스템_files/css2" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        :root {
-            --primary: #d4af37;
-            --primary-dark: #b8941f;
-            --bg-dark: #0a0e27;
-            --bg-card: #1a1f3a;
-            --text-primary: #ffffff;
-            --text-secondary: #a0aec0;
-            --accent: #4299e1;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        /* Header */
-        .header {
-            background: rgba(10, 14, 39, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 1.5rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary) 0%, #ffd700 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        .cta-button {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: var(--bg-dark);
-            padding: 0.75rem 2rem;
-            border-radius: 50px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
-        }
-        
-        /* Hero Section */
-        .hero {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 6rem 2rem;
-            text-align: center;
-        }
-        
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #ffffff 0%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            font-weight: 300;
-        }
-        
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--primary);
-            display: block;
-        }
-        
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            margin-top: 0.5rem;
-        }
-        
-        /* Features Section */
-        .section {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 5rem 2rem;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-        
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 4rem;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 20px;
-            padding: 2.5rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            transform: scaleX(0);
-            transition: transform 0.4s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
-        }
-        
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-        
-        .feature-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-        
-        .feature-description {
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-        
-        /* Calculators Grid */
-        .calculators-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .calculator-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 15px;
-            padding: 1.5rem;
-            transition: all 0.3s;
-        }
-        
-        .calculator-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
-        }
-        
-        .calc-number {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--bg-dark);
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            margin-bottom: 1rem;
-        }
-        
-        .calc-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-        
-        .calc-description {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-        
-        /* Technology Stack */
-        .tech-stack {
-            background: rgba(26, 31, 58, 0.5);
-            border-radius: 20px;
-            padding: 3rem;
-            margin-top: 4rem;
-        }
-        
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .tech-item {
-            text-align: center;
-            padding: 1.5rem;
-            background: var(--bg-card);
-            border-radius: 15px;
-            transition: all 0.3s;
-        }
-        
-        .tech-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
-        }
-        
-        .tech-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .tech-name {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(66, 153, 225, 0.1) 100%);
-            border-radius: 30px;
-            padding: 4rem;
-            text-align: center;
-            margin: 4rem 0;
-        }
-        
-        .cta-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .cta-section p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--bg-dark);
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
-            display: inline-block;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 30px rgba(212, 175, 55, 0.5);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-block;
-        }
-        
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: var(--bg-dark);
-        }
-        
-        /* Footer */
-        .footer {
-            background: rgba(10, 14, 39, 0.95);
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 3rem 2rem 2rem;
-            margin-top: 5rem;
-        }
-        
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
-        
-        .footer-section h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-        
-        .footer-section p, .footer-section a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s;
-        }
-        
-        .footer-section a:hover {
-            color: var(--primary);
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(212, 175, 55, 0.1);
-            color: var(--text-secondary);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .hero-subtitle { font-size: 1.2rem; }
-            .section-title { font-size: 2rem; }
-            .features-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="nav-container">
-            <div class="logo">
-                <span>🛡️</span>
-                <span>HedgeFreedom</span>
-            </div>
-            <nav class="nav-links">
-                <a href="sub2.html">주요 기능</a>
-                <a href="sub2.html">계산기</a>
-                <a href="sub2.html">기술 스택</a>
-                <a href="sub2.html">소개</a>
-            </nav>
-            <a href="sub2.html" class="cta-button">시작하기 →</a>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>외환 헤지 리스크를<br>AI로 완벽하게 관리하세요</h1>
-        <p class="hero-subtitle">
-            26개의 전문 계산기와 AI 기반 분석으로<br>
-            환율 변동 리스크를 실시간으로 모니터링하고 최적화합니다
-        </p>
-        <div class="cta-buttons">
-            <a href="sub2.html" class="btn-primary">무료로 시작하기</a>
-            <a href="sub2.html" class="btn-secondary">자세히 알아보기</a>
-            <a href="sub2.html" class="btn-secondary">서브2 페이지로 이동</a>
-        </div>
-        
-        <div class="hero-stats">
-            <div class="stat-item">
-                <span class="stat-number">26개</span>
-                <span class="stat-label">전문 계산기</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">실시간</span>
-                <span class="stat-label">환율 모니터링</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">K-IFRS</span>
-                <span class="stat-label">회계 기준 준수</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">AI 분석</span>
-                <span class="stat-label">예측 및 최적화</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="section" id="features">
-        <h2 class="section-title">핵심 기능</h2>
-        <p class="section-subtitle">HedgeFreedom이 제공하는 강력한 기능들</p>
-        
-        <div class="features-grid">
-            <div class="feature-card">
-                <span class="feature-icon">📊</span>
-                <h3 class="feature-title">26개 전문 계산기</h3>
-                <p class="feature-description">
-                    헤지 비율, VaR, 옵션 가격, 몬테카를로 시뮬레이션 등 
-                    외환 헤지에 필요한 모든 계산을 한 곳에서 수행하세요.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <span class="feature-icon">🤖</span>
-                <h3 class="feature-title">AI 예측 엔진</h3>
-                <p class="feature-description">
-                    머신러닝 기반 환율 예측과 신뢰도 분석으로
-                    데이터 기반 의사결정을 지원합니다.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <span class="feature-icon">📈</span>
-                <h3 class="feature-title">실시간 리스크 분석</h3>
-                <p class="feature-description">
-                    VaR, 스트레스 테스트, 시나리오 분석으로
-                    포트폴리오 리스크를 실시간으로 모니터링합니다.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <span class="feature-icon">💼</span>
-                <h3 class="feature-title">K-IFRS 회계 지원</h3>
-                <p class="feature-description">
-                    헤지회계 처리, 효과성 테스트, 재무제표 영향 분석까지
-                    회계 기준을 완벽하게 준수합니다.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <span class="feature-icon">🎯</span>
-                <h3 class="feature-title">전략 최적화</h3>
-                <p class="feature-description">
-                    포트폴리오 최적화, 동적 재조정, 비용-효과 분석으로
-                    최적의 헤지 전략을 제시합니다.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <span class="feature-icon">🌍</span>
-                <h3 class="feature-title">ESG 리스크 평가</h3>
-                <p class="feature-description">
-                    환경·사회·지배구조 요인이 환율에 미치는 영향을
-                    분석하고 장기 트렌드를 예측합니다.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Calculators Section -->
-    <section class="section" id="calculators">
-        <h2 class="section-title">26개 전문 계산기</h2>
-        <p class="section-subtitle">모든 외환 헤지 시나리오를 커버하는 완벽한 도구 세트</p>
-        
-        <div class="calculators-grid">
-            <div class="calculator-card">
-                <span class="calc-number">01</span>
-                <h4 class="calc-name">헤지 비율 계산기</h4>
-                <p class="calc-description">최적 헤지 비율과 필요 금액을 계산합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">02</span>
-                <h4 class="calc-name">헤지 수단 선택기</h4>
-                <p class="calc-description">선물환, 옵션, 스왑 중 최적 도구를 추천합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">03</span>
-                <h4 class="calc-name">결제 환율 예측</h4>
-                <p class="calc-description">미래 결제일의 예상 환율을 계산합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">04</span>
-                <h4 class="calc-name">손익 분석</h4>
-                <p class="calc-description">헤지 전략의 예상 손익을 시뮬레이션합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">05</span>
-                <h4 class="calc-name">옵션 프리미엄</h4>
-                <p class="calc-description">통화 옵션의 공정 가격을 계산합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">06</span>
-                <h4 class="calc-name">VaR 계산기</h4>
-                <p class="calc-description">Value at Risk로 최대 손실을 추정합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">07</span>
-                <h4 class="calc-name">환노출 분석</h4>
-                <p class="calc-description">통화별 노출 규모와 리스크를 평가합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">08</span>
-                <h4 class="calc-name">HLR 분석</h4>
-                <p class="calc-description">Highly Likely Relationship 테스트를 수행합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">09</span>
-                <h4 class="calc-name">후회 최소화</h4>
-                <p class="calc-description">헤지 후회를 최소화하는 전략을 제시합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">10</span>
-                <h4 class="calc-name">몬테카를로</h4>
-                <p class="calc-description">시뮬레이션으로 미래 환율 분포를 예측합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">11</span>
-                <h4 class="calc-name">스트레스 테스트</h4>
-                <p class="calc-description">극단적 시장 상황의 손익을 분석합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">12</span>
-                <h4 class="calc-name">델타 중립 포지션</h4>
-                <p class="calc-description">옵션과 선물의 델타 헤지를 계산합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">13</span>
-                <h4 class="calc-name">헤지 효과성 분석</h4>
-                <p class="calc-description">헤지 전략의 실제 효과를 측정합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">14</span>
-                <h4 class="calc-name">만기일 리스크</h4>
-                <p class="calc-description">헤지 만기일 불일치 리스크를 평가합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">15</span>
-                <h4 class="calc-name">VIX 충격 지수</h4>
-                <p class="calc-description">시장 변동성이 헤지에 미치는 영향을 분석합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">16</span>
-                <h4 class="calc-name">마진 변동 분석</h4>
-                <p class="calc-description">선물 헤지 시 필요한 증거금을 추적합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">17</span>
-                <h4 class="calc-name">헤지 비율 민감도</h4>
-                <p class="calc-description">헤지 비율 변화에 따른 손익을 분석합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">18</span>
-                <h4 class="calc-name">환전 시그널</h4>
-                <p class="calc-description">기술적 지표 기반 환전 타이밍을 제시합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">19</span>
-                <h4 class="calc-name">동적 재조정 신호</h4>
-                <p class="calc-description">시장 변화에 따른 포지션 재조정을 알립니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">20</span>
-                <h4 class="calc-name">교차 헤지 분석</h4>
-                <p class="calc-description">다른 통화로 헤지하는 효과성을 평가합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">21</span>
-                <h4 class="calc-name">포트폴리오 최적화</h4>
-                <p class="calc-description">여러 통화 포지션의 전체 리스크를 관리합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">22</span>
-                <h4 class="calc-name">세금 최적화</h4>
-                <p class="calc-description">헤지 손익의 세금 효율성을 분석합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">23</span>
-                <h4 class="calc-name">회계 처리 시뮬레이션</h4>
-                <p class="calc-description">K-IFRS 기준 회계 분개와 재무제표 영향을 계산합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">24</span>
-                <h4 class="calc-name">통화 바스켓 헤지</h4>
-                <p class="calc-description">여러 통화 조합 바스켓 전략을 분석합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">25</span>
-                <h4 class="calc-name">ESG 리스크 평가</h4>
-                <p class="calc-description">환경·사회·지배구조 요인의 환율 영향을 측정합니다</p>
-            </div>
-            
-            <div class="calculator-card">
-                <span class="calc-number">26</span>
-                <h4 class="calc-name">AI 예측 신뢰도</h4>
-                <p class="calc-description">AI 모델의 예측 신뢰도를 평가합니다</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technology Stack -->
-    <section class="section" id="technology">
-        <h2 class="section-title">기술 스택</h2>
-        <p class="section-subtitle">최신 기술로 구축된 안정적이고 확장 가능한 시스템</p>
-        
-        <div class="tech-stack">
-            <div class="tech-grid">
-                <div class="tech-item">
-                    <div class="tech-icon">⚡</div>
-                    <div class="tech-name">Node.js</div>
-                </div>
-                <div class="tech-item">
-                    <div class="tech-icon">📊</div>
-                    <div class="tech-name">Chart.js</div>
-                </div>
-                <div class="tech-item">
-                    <div class="tech-icon">🎨</div>
-                    <div class="tech-name">Modern CSS</div>
-                </div>
-                <div class="tech-item">
-                    <div class="tech-icon">🔒</div>
-                    <div class="tech-name">Security First</div>
-                </div>
-                <div class="tech-item">
-                    <div class="tech-icon">🚀</div>
-                    <div class="tech-name">REST API</div>
-                </div>
-                <div class="tech-item">
-                    <div class="tech-icon">🤖</div>
-                    <div class="tech-name">AI/ML</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="section">
-        <div class="cta-section">
-            <h2>지금 바로 시작하세요</h2>
-            <p>
-                복잡한 외환 헤지 리스크 관리,<br>
-                HedgeFreedom과 함께라면 쉽고 정확합니다
-            </p>
-            <div class="cta-buttons">
-                <a href="sub2.html" class="btn-primary">무료 체험 시작</a>
-                <a href="https://github.com/00vip7-stack/hedgeBasic" class="btn-secondary">GitHub 보기</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>HedgeFreedom</h3>
-                <p>AI 기반 외환 헤지 리스크 관리 시스템</p>
-                <p>26개 전문 계산기로 완벽한 리스크 관리를 경험하세요</p>
-            </div>
-            
-            <div class="footer-section">
-                <h3>주요 기능</h3>
-                <a href="sub2.html">26개 계산기</a>
-                <a href="sub2.html">AI 예측 엔진</a>
-                <a href="sub2.html">실시간 리스크 분석</a>
-                <a href="sub2.html">K-IFRS 회계 지원</a>
-            </div>
-            
-            <div class="footer-section">
-                <h3>리소스</h3>
-                <a href="https://github.com/00vip7-stack/hedgeBasic">GitHub</a>
-                <a href="sub2.html">라이브 데모</a>
-                <a href="sub2.html">기술 문서</a>
-            </div>
-            
-            <div class="footer-section">
-                <h3>연락처</h3>
-                <p>기업 문의 및 파트너십</p>
-                <a href="mailto:contact@hedgefreedom.com">contact@hedgefreedom.com</a>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>© 2025 HedgeFreedom. All rights reserved.</p>
-            <p>외환 헤지 리스크 관리의 새로운 기준</p>
-        </div>
-    </footer>
-
-
-</body></html>
->>>>>>> e195d7c3d95d0e217d6d6df2579b9f5514034a63
-
