@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8. 경쟁사 가격비교</title>
+    <style>
+        body { font-family: "Malgun Gothic", "맑은 고딕", Dotum, "돋움", sans-serif; background: #eef1f6; color: #333; margin: 0; }
+        .header { background: #fff; border-bottom: 2px solid #4a90e2; height: 45px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
+        .logo { font-size: 14px; font-weight: bold; color: #4a90e2; padding: 0 10px; border-right: 1px solid #ddd; flex: 0 0 auto; }
+        #fx-rate-header { flex: 0 0 auto; text-align: right; }
+        .menu-bar { background: #fff; border-bottom: 1px solid #ddd; height: 35px; display: flex; align-items: center; padding: 0 10px; }
+        .menu-item { padding: 8px 15px; min-width: 90px; text-align: center; color: #555; cursor: pointer; font-size: 12px; border-right: 1px solid #e5e5e5; background: #fafafa; text-decoration: none; display: inline-block; box-sizing: border-box; }
+        .menu-item:last-child { border-right: none; }
+        .menu-item.active { background: #4a90e2; color: #fff; font-weight: bold; }
+        .workspace { padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .page-title { background: #fff; padding: 10px 15px; margin-bottom: 18px; border: 1px solid #ddd; font-size: 15px; font-weight: bold; color: #333; display: flex; justify-content: space-between; align-items: center; }
+        .breadcrumb { font-size: 11px; color: #999; font-weight: normal; }
+    </style>
+</head>
+<body>
+    <!-- Ensure header consistency with 2.trade-input.html -->
+    <div class="header">
+        <div class="logo">HEDGEFREEDOM</div>
+        <div id="fx-rate-header" style="font-size:13px; color:#1976d2; margin-left:auto; display:flex; gap:18px; align-items:center;">
+            <span><b>USD/KRW</b> 1,325.50 <span style="color:#d32f2f;">+2.10</span> <span style="font-size:11px; color:#888;">(+0.16%)</span></span>
+            <span><b>EUR/KRW</b> 1,420.80 <span style="color:#1976d2;">-1.50</span> <span style="font-size:11px; color:#888;">(-0.11%)</span></span>
+            <span><b>JPY/KRW</b> 9.85 <span style="color:#d32f2f;">+0.02</span> <span style="font-size:11px; color:#888;">(+0.20%)</span></span>
+            <span style="border-left:1px solid #e0e0e0; padding-left:14px; color:#333;">
+                <b>달러인덱스(DXY)</b> 104.25 <span style="color:#1976d2;">+0.12</span> <span style="font-size:11px; color:#888;">(+0.11%)</span>
+            </span>
+        </div>
+    </div>
+    <div class="menu-bar">
+        <a href="1.dashboard.html" class="menu-item">대시보드</a>
+        <a href="2.trade-input.html" class="menu-item">거래관리</a>
+        <a href="3.internal-hedge.html" class="menu-item">내부헤지</a>
+        <a href="4.hedge-strategy.html" class="menu-item">외부헤지</a>
+        <a href="5.profit-analysis.html" class="menu-item">손익분석</a>
+        <a href="6.report.html" class="menu-item">리포트</a>
+        <a href="7.excel-upload.html" class="menu-item">엑셀업로드</a>
+        <a href="8.competitor-pricing.html" class="menu-item active">경쟁사 가격비교</a>
+    </div>
+    <div class="workspace">
+        <h2>경쟁사 요금 비교표 (2026년 기준)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>서비스명</th>
+                    <th>플랜</th>
+                    <th>월 요금(부가세별도)</th>
+                    <th>주요 기능</th>
+                    <th>비고</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background:#e3f6e8;font-weight:bold;">
+                    <td class="brand">HedgeFreedom</td>
+                    <td>Lite</td>
+                    <td>9,900원</td>
+                    <td>환리스크 자동화, 실시간 집계, 손익분석, 엑셀/API 연동, ERP 연동</td>
+                    <td>최저가, 중소기업 특화, 1개월 무료체험</td>
+                </tr>
+                <tr style="background:#e3f6e8;">
+                    <td class="brand">HedgeFreedom</td>
+                    <td>Pro</td>
+                    <td>29,000원</td>
+                    <td>Lite+고급 리포트, 커스텀 자동화, 다중계정, API 확장</td>
+                    <td>ERP/회계 연동, 대기업/수출입기업 지원</td>
+                </tr>
+                <tr>
+                    <td class="brand">더존 Smart A</td>
+                    <td>기본</td>
+                    <td>30,000원~</td>
+                    <td>회계, 자금, 세무, ERP 연동</td>
+                    <td>국내 ERP 1위, 환리스크 기능 미흡</td>
+                </tr>
+                <tr>
+                    <td class="brand">이카운트</td>
+                    <td>기본</td>
+                    <td>22,000원~</td>
+                    <td>회계, 자금, 재고, ERP 연동</td>
+                    <td>중소기업 특화, 환리스크 기능 미흡</td>
+                </tr>
+                <tr>
+                    <td class="brand">경리나라</td>
+                    <td>기본</td>
+                    <td>15,000원~</td>
+                    <td>회계, 자금, 세무, 간편관리</td>
+                    <td>소기업/스타트업, 환리스크 기능 없음</td>
+                </tr>
+                <tr>
+                    <td class="brand">Bizplay</td>
+                    <td>카드관리</td>
+                    <td>별도 협의</td>
+                    <td>법인카드, 자금관리, 경비처리</td>
+                    <td>자금 흐름 관리, 환리스크 미지원</td>
+                </tr>
+                <tr>
+                    <td class="brand">K-System</td>
+                    <td>기본</td>
+                    <td>50,000원~</td>
+                    <td>ERP, 자금, 회계, 대기업용</td>
+                    <td>환리스크 기능 미흡</td>
+                </tr>
+                <tr>
+                    <td class="brand">FX-해외 SaaS</td>
+                    <td>Standard</td>
+                    <td>$100~$500</td>
+                    <td>환리스크, 자동매칭, API</td>
+                    <td>해외기업, 한글 미지원</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="desc">
+            ※ 환리스크/헤지 특화 SaaS는 대부분 별도 견적 또는 월 $100~$500 수준.<br>
+            ※ 국내 ERP는 환리스크 자동화/실시간 집계 기능이 미흡함.<br>
+            ※ 우리 서비스는 환리스크 자동화, 실시간 집계, 손익분석, 엑셀/API 연동 등 특화 기능 제공.<br>
+        </div>
+    </div>
+</body>
+</html>

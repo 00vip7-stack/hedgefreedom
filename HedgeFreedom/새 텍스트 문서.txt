@@ -1,0 +1,22 @@
+# 내부 매칭 알고리즘 예시 (Python)
+def calculate_internal_matching(transactions):
+    """
+    transactions: [{'date': '2026-02-10', 'type': 'IN', 'amount': 10000}, ...]
+    """
+    matching_result = []
+    # 1. 날짜별로 그룹화
+    # 2. 동일 날짜 혹은 근접 날짜(Buffer) 내 입금과 출금 합계 계산
+    # 3. 상계(Netting) 후 잔액 산출
+    # 4. 변조 방지: PDF 파일 생성 시 서버에서 전자서명(Digital Signature)을 해시태그
+    # 5. 데이터바인딩: 
+    inflow = sum(t['amount'] for t in transactions if t['type'] == 'IN')
+    outflow = sum(t['amount'] for t in transactions if t['type'] == 'OUT')
+    
+    matched_amount = min(inflow, outflow)
+    net_exposure = inflow - outflow
+    
+    return {
+        "matched": matched_amount,
+        "exposure": net_exposure,
+        "saving_fee": matched_amount * 0.012  # 약 1.2% 환전 수수료 절감 가정
+    }

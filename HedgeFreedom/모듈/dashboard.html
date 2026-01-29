@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1. 대시보드</title>
+    <style>
+        body { font-family: "Malgun Gothic", "맑은 고딕", Dotum, "돋움", sans-serif; background: #eef1f6; color: #333; margin: 0; }
+        .header { background: #fff; border-bottom: 2px solid #4a90e2; height: 45px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
+        .logo { font-size: 14px; font-weight: bold; color: #4a90e2; padding: 0 10px; border-right: 1px solid #ddd; }
+        .system-name { font-size: 13px; color: #333; font-weight: 600; }
+        .menu-bar { background: #fff; border-bottom: 1px solid #ddd; height: 35px; display: flex; align-items: center; padding: 0 10px; }
+        .menu-item { padding: 8px 15px; color: #555; cursor: pointer; font-size: 12px; border-right: 1px solid #e5e5e5; background: #fafafa; text-decoration: none; display: inline-block; }
+        .menu-item.active { background: #4a90e2; color: #fff; font-weight: bold; }
+        .workspace { padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .page-title { background: #fff; padding: 10px 15px; margin-bottom: 18px; border: 1px solid #ddd; font-size: 15px; font-weight: bold; color: #333; display: flex; justify-content: space-between; align-items: center; }
+        .breadcrumb { font-size: 11px; color: #999; font-weight: normal; }
+        .kpi-row { display: flex; gap: 18px; margin-bottom: 18px; }
+        .kpi-card { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 4px; flex: 1; padding: 18px; text-align: center; }
+        .kpi-label { font-size: 12px; color: #666; margin-bottom: 8px; }
+        .kpi-value { font-size: 22px; font-weight: bold; color: #333; }
+        .kpi-change { font-size: 12px; margin-top: 6px; }
+        .kpi-up { color: #d32f2f; }
+        .kpi-down { color: #1976d2; }
+        .section { background: #fff; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 18px; padding: 18px; }
+        .section-title { font-size: 14px; font-weight: bold; color: #333; margin-bottom: 12px; }
+        .fx-rate-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .fx-rate-table th, .fx-rate-table td { border: 1px solid #e0e0e0; padding: 7px 10px; text-align: center; }
+        .fx-rate-table th { background: #e8edf2; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">HEDGEFREEDOM</div>
+        <div id="fx-rate-header" style="font-size:13px; color:#1976d2; margin-left:auto; display:flex; gap:18px; align-items:center;">
+            <span><b>USD/KRW</b> 1,325.50 <span style="color:#d32f2f;">+2.10</span> <span style="font-size:11px; color:#888;">(+0.16%)</span></span>
+            <span><b>EUR/KRW</b> 1,420.80 <span style="color:#1976d2;">-1.50</span> <span style="font-size:11px; color:#888;">(-0.11%)</span></span>
+            <span><b>JPY/KRW</b> 9.85 <span style="color:#d32f2f;">+0.02</span> <span style="font-size:11px; color:#888;">(+0.20%)</span></span>
+            <span style="border-left:1px solid #e0e0e0; padding-left:14px; color:#333;">
+                <b>달러인덱스(DXY)</b> 104.25 <span style="color:#1976d2;">+0.12</span> <span style="font-size:11px; color:#888;">(+0.11%)</span>
+            </span>
+        </div>
+    </div>
+    <div class="menu-bar">
+        <a href="index.html#dashboard" class="menu-item active">대시보드</a>
+        <a href="index.html#trade-input" class="menu-item">거래관리</a>
+        <a href="index.html#internal-hedge" class="menu-item">내부헤지</a>
+        <a href="index.html#hedge-strategy" class="menu-item">외부헤지</a>
+        <a href="index.html#profit-analysis" class="menu-item">손익분석</a>
+        <a href="index.html#report" class="menu-item">리포트</a>
+        <a href="index.html#excel-upload" class="menu-item">엑셀업로드</a>
+        <a href="index.html#digital-proof" class="menu-item">디지털면책증명서</a>
+        <a href="index.html" class="menu-item">모듈홈</a>
+    </div>
+    <div class="workspace">
+        <div style="margin-top:32px; text-align:right;">
+            <button onclick="location.href='trade-input.html'" style="background:#1976d2; color:#fff; border:none; border-radius:4px; padding:10px 22px; font-size:14px; cursor:pointer;">다음: 거래관리 모듈 →</button>
+        </div>
+        <div class="page-title">
+            <span>대시보드</span>
+            <span class="breadcrumb">HOME &gt; 대시보드</span>
+        </div>
+        <div class="kpi-row">
+            <div class="kpi-card">
+                <div class="kpi-label">총 외화노출액</div>
+                <div class="kpi-value">USD 1,250,000</div>
+                <div class="kpi-change kpi-up">▲ 5.2% (최근 1주)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">미헤지 거래</div>
+                <div class="kpi-value">3건 / USD 545,000</div>
+                <div class="kpi-change kpi-down">▼ 1건 감소</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">평균 헤지비율</div>
+                <div class="kpi-value">68%</div>
+                <div class="kpi-change">(목표: 75%)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">환차손익(월간)</div>
+                <div class="kpi-value">+2,350,000원</div>
+                <div class="kpi-change">(헤지효과: +210,000원)</div>
+            </div>
+        </div>
+        <div class="section">
+            <!-- 실시간 환율 섹션은 헤더로 이동, 추후 실시간 연동 예정 -->
+        </div>
+        <div class="section">
+            <div class="section-title">실행 권고</div>
+            <ul>
+                <li>미헤지 거래 즉시 내부 헤지 실행 권고</li>
+                <li>환율 변동성 확대 시 외부 헤지 전략 검토</li>
+                <li>만기별 노출액 집중 관리 필요</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

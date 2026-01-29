@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>거래내역 관리 - 환리스크 관리 시스템</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Malgun Gothic", "맑은 고딕", Dotum, "돋움", sans-serif;
+            font-size: 12px;
+            background: #eef1f6;
+            color: #333;
+        }
+        
+        /* 더존 스타일 - 상단 헤더 */
+        .header {
+            background: #fff;
+            border-bottom: 2px solid #4a90e2;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo {
+            font-size: 14px;
+            font-weight: bold;
+            color: #4a90e2;
+            padding: 0 10px;
+            border-right: 1px solid #ddd;
+        }
+        
+        .system-name {
+            font-size: 13px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .user-name {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        /* 더존 스타일 - 메뉴바 */
+        .menu-bar {
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+        
+        .menu-item {
+            padding: 8px 15px;
+            color: #555;
+            cursor: pointer;
+            font-size: 12px;
+            border-right: 1px solid #e5e5e5;
+            background: #fafafa;
+        }
+        
+        .menu-item:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .menu-item.active {
+            background: #4a90e2;
+            color: #fff;
+            font-weight: bold;
+        }
+        
+        /* 더존 스타일 - 작업 영역 */
+        .workspace {
+            padding: 10px;
+        }
+        
+        .page-title {
+            background: #fff;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd;
+            font-size: 13px;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .breadcrumb {
+            font-size: 11px;
+            color: #999;
+            font-weight: normal;
+        }
+        
+        /* 더존 스타일 - 검색/조건 영역 */
+        .search-area {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .search-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .search-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .search-label {
+            width: 80px;
+            background: #f8f8f8;
+            border: 1px solid #d5d5d5;
+            padding: 5px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .search-input {
+            border: 1px solid #d5d5d5;
+            padding: 4px 8px;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+        
+        .btn {
+            padding: 5px 12px;
+            border: 1px solid #d5d5d5;
+            background: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            color: #333;
+        }
+        
+        .btn:hover {
+            background: #f5f5f5;
+        }
+        
+        .btn-primary {
+            background: #4a90e2;
+            color: #fff;
+            border-color: #4a90e2;
+        }
+        
+        .btn-primary:hover {
+            background: #3a7bc8;
+        }
+        
+        /* 더존 스타일 - 툴바 */
+        .toolbar {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            padding: 6px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .toolbar-left {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .toolbar-right {
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .btn-sm {
+            padding: 4px 10px;
+            font-size: 12px;
+            border: 1px solid #d5d5d5;
+            background: #fff;
+            cursor: pointer;
+        }
+        
+        .btn-sm:hover {
+            background: #f5f5f5;
+        }
+        
+        /* 더존 스타일 - 그리드/테이블 */
+        .grid-container {
+            background: #fff;
+            border: 1px solid #ddd;
+            overflow: auto;
+            max-height: 500px;
+        }
+        
+        .grid {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        .grid thead {
+            background: #e8edf2;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .grid th {
+            border: 1px solid #c5cdd4;
+            padding: 6px 8px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            background: linear-gradient(to bottom, #f5f7fa 0%, #e8edf2 100%);
+        }
+        
+        .grid td {
+            border: 1px solid #e0e0e0;
+            padding: 5px 8px;
+            background: #fff;
+        }
+        
+        .grid tbody tr:hover {
+            background: #fffacd !important;
+        }
+        
+        .grid tbody tr.selected {
+            background: #d6ebff !important;
+        }
+        
+        .grid tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+        
+        /* 더존 스타일 - 컬럼 정렬 */
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+        
+        /* 더존 스타일 - 상태 표시 */
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 2px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .status-active {
+            background: #e6f3ff;
+            color: #0066cc;
+            border: 1px solid #99ccff;
+        }
+        
+        .status-complete {
+            background: #f0f0f0;
+            color: #666;
+            border: 1px solid #ccc;
+        }
+        
+        .status-pending {
+            background: #fff3e0;
+            color: #ff6600;
+            border: 1px solid #ffcc99;
+        }
+        
+        /* 더존 스타일 - 체크박스 */
+        input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+        }
+        
+        /* 더존 스타일 - 숫자 셀 */
+        .amount {
+            font-family: "Consolas", "Courier New", monospace;
+            text-align: right;
+            font-weight: 500;
+        }
+        
+        /* 더존 스타일 - 상태바 */
+        .status-bar {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-top: none;
+            padding: 5px 10px;
+            font-size: 11px;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal.active {
+            display: block;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            width: 80%;
+            max-width: 900px;
+            border: 1px solid #888;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-header {
+            background: linear-gradient(to bottom, #f5f7fa 0%, #e8edf2 100%);
+            padding: 12px 15px;
+            border-bottom: 2px solid #4a90e2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .modal-close {
+            color: #aaa;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
+        .modal-close:hover {
+            color: #000;
+        }
+        
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-label {
+            width: 120px;
+            background: #f8f8f8;
+            border: 1px solid #d5d5d5;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-input {
+            flex: 1;
+            border: 1px solid #d5d5d5;
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+        
+        .form-input:disabled {
+            background: #f5f5f5;
+            color: #999;
+        }
+        
+        .modal-footer {
+            background: #f5f5f5;
+            padding: 12px 15px;
+            border-top: 1px solid #ddd;
+            text-align: right;
+        }
+        
+        .recommendation-box {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .recommendation-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        
+        .recommendation-item {
+            font-size: 12px;
+            color: #333;
+            margin: 5px 0;
+            padding-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 더존 스타일 헤더 -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">HEDGE SYSTEM</div>
+            <div class="system-name">환리스크 통합관리 시스템</div>
+        </div>
+        <div class="header-right">
+            <span class="user-name">홍길동</span> 님 |
+            <span>삼성전자</span> |
+            <span id="currentTime">2026-01-27 14:30:45</span> |
+            <a href="#" style="color: #4a90e2; text-decoration: none;">로그아웃</a>
+        </div>
+    </div>
+    
+    <!-- 더존 스타일 메뉴바 -->
+    <div class="menu-bar">
+        <div class="menu-item">대시보드</div>
+        <div class="menu-item active">거래관리</div>
+        <a href="hedge-strategy.html" class="menu-item" style="text-decoration: none; color: inherit;">헤지전략</a>
+        <div class="menu-item">손익분석</div>
+        <div class="menu-item">리포트</div>
+        <div class="menu-item">환경설정</div>
+    </div>
+    
+    <!-- 작업 영역 -->
+    <div class="workspace">
+        <!-- 페이지 타이틀 -->
+        <div class="page-title">
+            <span>거래내역 관리</span>
+            <span class="breadcrumb">HOME &gt; 거래관리 &gt; 거래내역 관리</span>
+        </div>
+        
+        <!-- 검색 조건 -->
+        <div class="search-area">
+            <div class="search-row">
+                <div class="search-label">거래기간</div>
+                <input type="date" class="search-input" value="2026-01-01" style="width: 130px;">
+                <span style="margin: 0 5px;">~</span>
+                <input type="date" class="search-input" value="2026-01-31" style="width: 130px;">
+                
+                <div class="search-label" style="margin-left: 20px;">통화</div>
+                <select class="search-input" style="width: 100px;">
+                    <option>전체</option>
+                    <option>USD</option>
+                    <option>EUR</option>
+                    <option>JPY</option>
+                </select>
+                
+                <div class="search-label" style="margin-left: 20px;">상태</div>
+                <select class="search-input" style="width: 100px;">
+                    <option>전체</option>
+                    <option>진행중</option>
+                    <option>완료</option>
+                    <option>대기</option>
+                </select>
+                
+                <button class="btn btn-primary" style="margin-left: 10px;">조회</button>
+                <button class="btn" style="margin-left: 5px;">초기화</button>
+            </div>
+        </div>
+        
+        <!-- 툴바 -->
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <button class="btn-sm">신규</button>
+                <button class="btn-sm">수정</button>
+                <button class="btn-sm">삭제</button>
+                <button class="btn-sm">저장</button>
+                <button class="btn-sm" style="margin-left: 10px;">Excel</button>
+                <button class="btn-sm">인쇄</button>
+            </div>
+            <div class="toolbar-right">
+                <span>총 <strong style="color: #4a90e2;">15</strong>건 | 선택 <strong style="color: #4a90e2;">0</strong>건</span>
+            </div>
+        </div>
+        
+        <!-- 그리드 -->
+        <div class="grid-container">
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th style="width: 35px;"><input type="checkbox"></th>
+                        <th style="width: 40px;">No</th>
+                        <th style="width: 80px;">거래일자</th>
+                        <th style="width: 100px;">거래번호</th>
+                        <th style="width: 60px;">통화</th>
+                        <th style="width: 70px;">구분</th>
+                        <th style="width: 120px;">거래금액(USD)</th>
+                        <th style="width: 100px;">환율</th>
+                        <th style="width: 130px;">원화금액(KRW)</th>
+                        <th style="width: 80px;">예상만기일</th>
+                        <th style="width: 80px;">헤지비율</th>
+                        <th style="width: 70px;">상태</th>
+                        <th style="width: 150px;">거래처</th>
+                        <th style="width: 100px;">담당자</th>
+                        <th style="width: 200px;">비고</th>
+                    </tr>
+                </thead>
+                <tbody id="gridBody">
+                    <!-- 데이터는 JavaScript로 렌더링 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 상태바 -->
+        <div class="status-bar">
+            <div>
+                <strong>총 거래금액:</strong> USD 1,250,000 | EUR 450,000 | JPY 5,000,000
+            </div>
+            <div>
+                <strong>평균 헤지비율:</strong> 68% | 
+                <strong>진행중:</strong> 8건 | 
+                <strong>완료:</strong> 7건
+            </div>
+        </div>
+    </div>
+
+    <!-- 헤지전략 모달 -->
+    <div id="hedgeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">헤지전략 수립</div>
+                <span class="modal-close" onclick="closeHedgeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="form-label">거래번호</div>
+                    <input type="text" class="form-input" id="hedgeTradeId" value="TR-2026-0001" disabled>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">거래금액</div>
+                    <input type="text" class="form-input" id="hedgeAmount" value="USD 150,000" disabled>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">현재환율</div>
+                    <input type="text" class="form-input" id="hedgeCurrentRate" value="1,320.50 KRW" disabled>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">예상만기일</div>
+                    <input type="text" class="form-input" id="hedgeMaturity" value="2026-03-15" disabled>
+                </div>
+                
+                <div class="recommendation-box">
+                    <div class="recommendation-title">📊 AI 추천 헤지 전략</div>
+                    <div class="recommendation-item">• <strong>권장 헤지비율:</strong> 70% (USD 105,000)</div>
+                    <div class="recommendation-item">• <strong>근거:</strong> 최근 30일 변동성 8.5% (중간 수준)</div>
+                    <div class="recommendation-item">• <strong>예상효과:</strong> 환율 ±3% 변동 시 손실 65% 감소</div>
+                    <div class="recommendation-item">• <strong>추천상품:</strong> 선물환 계약 (Forward Contract)</div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">헤지비율 (%)</div>
+                    <input type="number" class="form-input" id="hedgeRatio" value="70" min="0" max="100" 
+                           oninput="updateHedgeAmount()">
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">헤지금액</div>
+                    <input type="text" class="form-input" id="hedgeAmountCalc" value="USD 105,000" disabled>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">선물환율</div>
+                    <input type="number" class="form-input" id="hedgeForwardRate" value="1325.00" step="0.01">
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">계약일자</div>
+                    <input type="date" class="form-input" id="hedgeContractDate" value="2026-01-27">
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">비고</div>
+                    <input type="text" class="form-input" id="hedgeNote" placeholder="메모 입력">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeHedgeModal()">취소</button>
+                <button class="btn btn-primary" onclick="saveHedgeStrategy()" style="margin-left: 5px;">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 샘플 데이터
+        const trades = [
+            { id: 'TR-2026-0001', date: '2026-01-15', currency: 'USD', type: '수출', amount: 150000, rate: 1318.50, krw: 197775000, maturity: '2026-03-15', hedge: 70, status: '진행중', client: '미국ABC사', manager: '김철수', note: '정기수출계약' },
+            { id: 'TR-2026-0002', date: '2026-01-16', currency: 'EUR', type: '수입', amount: 80000, rate: 1448.30, krw: 115864000, maturity: '2026-02-20', hedge: 85, status: '진행중', client: '독일XYZ GmbH', manager: '이영희', note: '원자재 수입' },
+            { id: 'TR-2026-0003', date: '2026-01-18', currency: 'USD', type: '수출', amount: 200000, rate: 1320.00, krw: 264000000, maturity: '2026-04-10', hedge: 60, status: '진행중', client: '캐나다DEF', manager: '박민수', note: '전자부품 수출' },
+            { id: 'TR-2026-0004', date: '2026-01-20', currency: 'JPY', type: '수입', amount: 5000000, rate: 9.85, krw: 49250000, maturity: '2026-03-01', hedge: 90, status: '대기', client: '일본GHI주식회사', manager: '최지원', note: '기계류 수입' },
+            { id: 'TR-2026-0005', date: '2026-01-22', currency: 'USD', type: '수출', amount: 120000, rate: 1315.20, krw: 157824000, maturity: '2026-02-28', hedge: 75, status: '완료', client: '싱가폴JKL', manager: '정수현', note: '화학제품 수출' },
+            { id: 'TR-2026-0006', date: '2026-01-23', currency: 'EUR', type: '수출', amount: 95000, rate: 1452.00, krw: 137940000, maturity: '2026-03-25', hedge: 55, status: '진행중', client: '프랑스MNO SA', manager: '김철수', note: '의료기기 수출' },
+            { id: 'TR-2026-0007', date: '2026-01-24', currency: 'USD', type: '수입', amount: 175000, rate: 1322.80, krw: 231490000, maturity: '2026-04-15', hedge: 80, status: '진행중', client: '중국PQR', manager: '이영희', note: '섬유제품 수입' },
+            { id: 'TR-2026-0008', date: '2026-01-25', currency: 'USD', type: '수출', amount: 210000, rate: 1319.50, krw: 277095000, maturity: '2026-05-01', hedge: 65, status: '진행중', client: '베트남STU', manager: '박민수', note: '플라스틱 원료' },
+        ];
+
+        // 그리드 렌더링
+        function renderGrid() {
+            const tbody = document.getElementById('gridBody');
+            tbody.innerHTML = trades.map((trade, index) => {
+                let statusClass = 'status-active';
+                let statusText = trade.status;
+                
+                if (trade.status === '완료') {
+                    statusClass = 'status-complete';
+                } else if (trade.status === '대기') {
+                    statusClass = 'status-pending';
+                }
+                
+                let typeClass = trade.type === '수출' ? 'status-badge' : 'status-badge';
+                let typeStyle = trade.type === '수출' 
+                    ? 'background: #e3f2fd; color: #1976d2; border: 1px solid #90caf9;' 
+                    : 'background: #fff3e0; color: #f57c00; border: 1px solid #ffb74d;';
+                
+                return `
+                    <tr>
+                        <td class="text-center"><input type="checkbox"></td>
+                        <td class="text-center">${index + 1}</td>
+                        <td class="text-center">${trade.date}</td>
+                        <td class="text-center">${trade.id}</td>
+                        <td class="text-center"><strong>${trade.currency}</strong></td>
+                        <td class="text-center"><span class="${typeClass}" style="${typeStyle}">${trade.type}</span></td>
+                        <td class="amount">${trade.amount.toLocaleString()}</td>
+                        <td class="amount">${trade.rate.toFixed(2)}</td>
+                        <td class="amount">${trade.krw.toLocaleString()}</td>
+                        <td class="text-center">${trade.maturity}</td>
+                        <td class="text-center"><strong style="color: ${trade.hedge >= 70 ? '#4a90e2' : '#ff6600'};">${trade.hedge}%</strong></td>
+                        <td class="text-center"><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td class="text-left">${trade.client}</td>
+                        <td class="text-center">${trade.manager}</td>
+                        <td class="text-left">${trade.note}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // 시간 업데이트
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }).replace(/\. /g, '-').replace('.', '');
+            document.getElementById('currentTime').textContent = timeStr;
+        }
+
+        // 초기화
+        renderGrid();
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // 모달 함수
+        function openHedgeModal() {
+            document.getElementById('hedgeModal').classList.add('active');
+        }
+        
+        function closeHedgeModal() {
+            document.getElementById('hedgeModal').classList.remove('active');
+        }
+        
+        function updateHedgeAmount() {
+            const ratio = document.getElementById('hedgeRatio').value;
+            const baseAmount = 150000; // 기본 거래금액
+            const hedgeAmount = Math.round(baseAmount * ratio / 100);
+            document.getElementById('hedgeAmountCalc').value = `USD ${hedgeAmount.toLocaleString()}`;
+        }
+        
+        function saveHedgeStrategy() {
+            const ratio = document.getElementById('hedgeRatio').value;
+            const forwardRate = document.getElementById('hedgeForwardRate').value;
+            const contractDate = document.getElementById('hedgeContractDate').value;
+            const note = document.getElementById('hedgeNote').value;
+            
+            alert(`헤지전략이 저장되었습니다.\n\n헤지비율: ${ratio}%\n선물환율: ${forwardRate}\n계약일: ${contractDate}`);
+            closeHedgeModal();
+        }
+        
+        // 모달 외부 클릭시 닫기
+        window.onclick = function(event) {
+            const modal = document.getElementById('hedgeModal');
+            if (event.target == modal) {
+                closeHedgeModal();
+            }
+        }
+    </script>
+</body>
+</html>
