@@ -232,32 +232,38 @@
         <div class="system-name">내부 헤지전략 관리</div>
     </div>
     <div class="menu-bar">
-        <a href="dashboard.html" class="menu-item">대시보드</a>
-        <a href="trade-input.html" class="menu-item">거래관리</a>
-        <a href="internal-hedge.html" class="menu-item active">내부헤지전략</a>
-        <a href="hedge-strategy.html" class="menu-item">외부헤지전략</a>
-        <a href="report.html" class="menu-item">리포트</a>
-        <a href="#" class="menu-item">환경설정</a>
+        <a href="index.html#dashboard" class="menu-item">대시보드</a>
+        <a href="index.html#trade-input" class="menu-item">거래관리</a>
+        <a href="index.html#internal-hedge" class="menu-item active">내부헤지</a>
+        <a href="index.html#hedge-strategy" class="menu-item">외부헤지</a>
+        <a href="index.html#profit-analysis" class="menu-item">손익분석</a>
+        <a href="index.html#report" class="menu-item">리포트</a>
+        <a href="index.html#excel-upload" class="menu-item">엑셀업로드</a>
+        <a href="index.html#digital-proof" class="menu-item">디지털면책증명서</a>
+        <a href="index.html" class="menu-item">모듈홈</a>
     </div>
     <div class="workspace">
+        <div style="margin-top:32px; text-align:right;">
+            <button onclick="location.href='hedge-strategy.html'" style="background:#1976d2; color:#fff; border:none; border-radius:4px; padding:10px 22px; font-size:14px; cursor:pointer;">다음: 외부헤지 모듈 →</button>
+        </div>
         <div class="page-title">
             <span>내부 헤지전략</span>
             <span class="breadcrumb">HOME &gt; 내부헤지전략</span>
         </div>
-        <div class="panel">
-            <div class="panel-header">실시간 KPI</div>
-            <div class="panel-body">
-                <div class="kpi-row">
-                    <div class="kpi-card">
-                        <div class="kpi-label">총 외화노출액</div>
-                        <div class="kpi-value">USD 1,250,000</div>
-                        <div class="kpi-change kpi-up">▲ 5.2% (최근 1주)</div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-label">미헤지 거래</div>
-                        <div class="kpi-value">3건 / USD 545,000</div>
-                        <div class="kpi-change kpi-down">▼ 1건 감소</div>
-                    </div>
+        <div class="header">
+            <div class="logo">HedgeFreedom</div>
+            <div id="fx-rate-header">환율: 1,350.00</div>
+            <div class="menu-bar">
+                <div class="menu-item">대시보드</div>
+                <div class="menu-item">거래관리</div>
+                <div class="menu-item">내부헤지</div>
+                <div class="menu-item">헤지전략</div>
+                <div class="menu-item">성과분석</div>
+                <div class="menu-item">리포트</div>
+                <div class="menu-item">엑셀업로드</div>
+                <div class="menu-item">경쟁사견적</div>
+            </div>
+        </div>
                     <div class="kpi-card">
                         <div class="kpi-label">평균 헤지비율</div>
                         <div class="kpi-value">68%</div>
@@ -279,38 +285,36 @@
                         <table class="trade-table" id="tradeTable">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>거래번호</th>
-                                    <th>거래일자</th>
-                                    <th>통화</th>
-                                    <th>거래금액</th>
-                                    <th>만기일</th>
-                                    <th>헤지상태</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- JS로 렌더링 -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="detail-panel">
-                <div class="panel">
-                    <div class="panel-header">내부 헤지 전략 상세</div>
-                    <div class="panel-body" id="strategyDetail">
-                        <div style="text-align:center; color:#999; padding:40px;">좌측 거래를 선택하세요</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        // 샘플 거래 데이터
-        const trades = [
-            { id: 'TR-2026-0001', date: '2026-01-15', currency: 'USD', amount: 150000, maturity: '2026-03-15', status: '부분헤지' },
-            { id: 'TR-2026-0002', date: '2026-01-16', currency: 'EUR', amount: 80000, maturity: '2026-02-20', status: '부분헤지' },
-            { id: 'TR-2026-0003', date: '2026-01-18', currency: 'USD', amount: 200000, maturity: '2026-04-10', status: '미헤지' },
+                                    .header {
+                                        display: flex;
+                                        align-items: center;
+                                        height: 60px;
+                                        background: #fff;
+                                        border-bottom: 1px solid #e5e5e5;
+                                        padding: 0 32px;
+                                        font-size: 18px;
+                                    }
+                                    .logo {
+                                        flex: 0 0 auto;
+                                        font-weight: bold;
+                                        font-size: 22px;
+                                        color: #1a237e;
+                                        margin-right: 16px;
+                                    }
+                                    #fx-rate-header {
+                                        flex: 0 0 auto;
+                                        font-size: 16px;
+                                        color: #388e3c;
+                                        min-width: 160px;
+                                        margin-right: 24px;
+                                    }
+                                    .menu-bar {
+                                        display: flex;
+                                        flex: 1 1 auto;
+                                        justify-content: flex-start;
+                                        align-items: center;
+                                        gap: 0;
+                                    }
             { id: 'TR-2026-0004', date: '2026-01-20', currency: 'JPY', amount: 5000000, maturity: '2026-03-01', status: '부분헤지' },
             { id: 'TR-2026-0005', date: '2026-01-22', currency: 'USD', amount: 120000, maturity: '2026-02-28', status: '완전헤지' },
             { id: 'TR-2026-0006', date: '2026-01-23', currency: 'EUR', amount: 95000, maturity: '2026-03-25', status: '미헤지' },
